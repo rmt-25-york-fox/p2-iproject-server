@@ -1,5 +1,11 @@
 const errorHandler = (err,req,res,next) =>{
     switch (err.name) {       
+        case 'Email and password is required':
+            res.status(401).json({statusCode: 401,message: 'Email and password is required'});
+            break;
+        case 'Invalid email or password':
+            res.status(401).json({statusCode: 401,message: err});
+            break;
         case 'SequelizeValidationError':
             res.status(400).json({statusCode: 400,message: err.errors[0].message});
             break;
