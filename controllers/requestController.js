@@ -58,9 +58,20 @@ class Requests {
                 'Success update'
             )
         } catch (err) {
-            console.log(err);
             next(err)
             
+        }
+    }
+    static async getDetailRequest (req,res,next){
+        try {
+            const id = req.params.id
+            const resp = await Request.findOne({where:{id},include:[User]})
+            if(!resp) throw {name:'Request Not Found'}
+            res.status(200).json(
+                resp
+            )
+        } catch (err) {
+            next(err)
         }
     }
 }

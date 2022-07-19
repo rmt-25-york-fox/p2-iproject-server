@@ -21,6 +21,9 @@ const errorHandler = (err,req,res,next) =>{
         case `Request Taken already`:
             res.status(403).json(err);
             break;
+        case `Request Not Found`:
+            res.status(404).json(err);
+            break;
         case 'Unauthorized':
             res.status(401).json('Token Invalid');
             break;

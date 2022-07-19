@@ -8,6 +8,7 @@ router.post('/login',Users.login)
 router.use(authenticate)
 router.post('/request',Requests.addRequest)
 router.get('/request',Requests.getRequest)
+router.get('/request/:id',Requests.getDetailRequest)
 router.patch('/request/:id',Requests.assignPic)
 router.patch('/requests/:id',Requests.finishRequest)
 
