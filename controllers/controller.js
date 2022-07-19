@@ -136,7 +136,7 @@ class Controller {
       const { id } = req.user;
       const myTransaksi = await Transaksi.findAll({
         where: {
-          id,
+          UserId: id,
         },
         include: {
           model: Petrol,
