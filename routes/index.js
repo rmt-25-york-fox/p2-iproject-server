@@ -10,7 +10,10 @@ router.post("/login", Controller.login);
 router.use(authentication);
 
 router.get("/petrol", Controller.getPetrol);
+
 router.get("/transaksi", Controller.getTransaksi);
+
+router.post("/transkasi/:petrolId", Controller.postTranskasi);
 
 router.use(errorHandler);
 module.exports = router;

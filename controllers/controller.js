@@ -94,7 +94,6 @@ class Controller {
   static async getTransaksi(req, res, next) {
     try {
       const { id } = req.user;
-      console.log(id);
       const myTransaksi = await Transaksi.findAll({
         where: {
           id,
@@ -103,7 +102,6 @@ class Controller {
           model: Petrol,
         },
       });
-      console.log(myTransaksi, "<<<");
 
       res.status(200).json({
         statuscode: 200,
@@ -112,7 +110,37 @@ class Controller {
         },
       });
     } catch (err) {
-      console.log(err);
+      next(err);
+    }
+  }
+
+  static async postTranskasi(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { liter } = req.body;
+      const { petrolId } = req.params;
+      console.log(id, liter, petrolId, "<<");
+      const gas = await Petrol.findByPk(petrolId);
+
+      if (!gas) {
+        throw { name: "Data Not Found" };
+      }
+
+      let input = {
+        UserId: id,
+        PetrolId: petrolId,
+        TotalHarga: Math.round(liter * gas.harga),
+      };
+
+      const transaksi = await Transaksi.create(input);
+
+      res.status(201).json({
+        statuscode: 201,
+        data: {
+          transaksi,
+        },
+      });
+    } catch (err) {
       next(err);
     }
   }
