@@ -4,7 +4,17 @@ class Controller {
   static async register(req, res, next) {
     try {
       const { email, password, kendaraan } = req.body;
-      console.log(email, password, kendaraan, "<<<");
+
+      if (email) {
+        const findCust = await Customer.findOne({
+          where: {
+            email,
+          },
+        });
+        if (findCust) {
+          throw { name: `Email has been created` };
+        }
+      }
 
       let input = { email, password, kendaraan };
       const createUser = await User.create(input);
@@ -18,7 +28,6 @@ class Controller {
         },
       });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
