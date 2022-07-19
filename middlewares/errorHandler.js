@@ -30,7 +30,7 @@ const errorHandler = (err, req, res, next) => {
   } else if (name === "BadRequest") {
     code = 400;
     message = "Bad Request";
-  } else if (name === "Data Not Found" || name === `Movie not found`) {
+  } else if (name === "Data Not Found" || name === `Gas not found`) {
     code = 404;
     message = "Data Not Found";
   }
