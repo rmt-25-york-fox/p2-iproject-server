@@ -8,5 +8,6 @@ router.post('/login',Users.login)
 router.use(authenticate)
 router.post('/request',Requests.addRequest)
 router.get('/request',Requests.getRequest)
+router.patch('/request/:id',Requests.assignPic)
 
 module.exports = router

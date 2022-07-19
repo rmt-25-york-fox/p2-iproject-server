@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     points: DataTypes.INTEGER,
     status: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    picId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Request',

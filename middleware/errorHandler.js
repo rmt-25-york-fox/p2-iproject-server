@@ -9,6 +9,9 @@ const errorHandler = (err,req,res,next) =>{
         case 'Insufficient points':
             res.status(401).json(err);
             break;
+        case `Can't assign yourself`:
+            res.status(401).json(err);
+            break;
         case 'Unauthorized':
             res.status(401).json('Token Invalid');
             break;

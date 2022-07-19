@@ -24,8 +24,23 @@ class Requests {
                 resp
             )
         } catch (err) {
-            console.log(err);
             next(err)
+        }
+    }
+    static async assignPic (req,res,next){
+        try {
+            const picId = req.user.id
+            const id = req.params.id
+            const status = 'Taken'
+            const checkId = await Request.findOne({where:{id}})
+            if(picId === checkId.UserId) throw {name:`Can't assign yourself`}
+            const resp = await Request.update({status,picId,updatedAt:new Date()},{where:{id}})
+            res.status(200).json(
+                'Success assign'
+            )
+        } catch (err) {
+            next(err)
+            
         }
     }
 }
