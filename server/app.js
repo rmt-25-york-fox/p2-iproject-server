@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.post("/register", Controller.register);
 app.post("/login", Controller.login);
+app.get("/digimons", Controller.fetchDigimons);
 
 app.use(errorHandler);
 app.listen(port, () => console.log("Successfully connected to port " + port));
