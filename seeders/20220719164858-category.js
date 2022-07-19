@@ -11,16 +11,16 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    // const data = require("../data/product.json");
+    // const data = require("../data/category.json");
     // data.forEach((e) => {
     //   e.createdAt = e.updatedAt = new Date();
     // });
-    // await queryInterface.bulkInsert("Products", data);
-    const data = require("../data/category.json");
+    // await queryInterface.bulkInsert("Categories", data);
+    const data = require("../data/product.json");
     data.forEach((e) => {
       e.createdAt = e.updatedAt = new Date();
     });
-    await queryInterface.bulkInsert("Categories", data);
+    await queryInterface.bulkInsert("Products", data);
   },
 
   async down(queryInterface, Sequelize) {
@@ -29,7 +29,7 @@ module.exports = {
      *
      * Example:
      */
-    await queryInterface.bulkDelete("Categories", null, {});
-    // await queryInterface.bulkDelete("Products", null, {});
+    // await queryInterface.bulkDelete("Categories", null, {});
+    await queryInterface.bulkDelete("Products", null, {});
   },
 };
