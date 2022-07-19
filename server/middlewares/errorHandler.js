@@ -1,4 +1,5 @@
 const errorHandler = (err, req, res, next) => {
+  console.log(err)
   switch (err.name) {
     case "SequelizeValidationError":
       res.status(400).json({ message: err.errors[0].message });
@@ -17,7 +18,11 @@ const errorHandler = (err, req, res, next) => {
     case "PasswordRequired":
       res.status(400).json({ message: "Silahkan masukkan password" });
       break;
+    case "NotUser":
+      res.status(401).json({ message: "Invalid email/password" });
+      break;
     default:
+      res.status(500).json({ message: "Internal server error" });
       break;
   }
 };
