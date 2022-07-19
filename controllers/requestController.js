@@ -6,10 +6,10 @@ class Requests {
             const UserId = req.user.id
             const status = 'New'
             const { title,description,points } = req.body
-            const resp = await Request.create({title,description,points,status,UserId})
             const checkPoint = await User.findOne({where:{id:UserId}})
             if(checkPoint.points < points) throw {name:'Insufficient points'}
             const decrease = await User.decrement({points:points},{where:{id:UserId}})
+            const resp = await Request.create({title,description,points,status,UserId})
             res.status(201).json(
                 resp
             )
