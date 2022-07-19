@@ -78,6 +78,8 @@ class Controller {
     try {
       const petrol = await Petrol.findAll();
 
+      console.log(petrol, "<<ini poetrol");
+
       res.status(200).json({
         statuscode: 200,
         data: {
@@ -85,6 +87,32 @@ class Controller {
         },
       });
     } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getTransaksi(req, res, next) {
+    try {
+      const { id } = req.user;
+      console.log(id);
+      const myTransaksi = await Transaksi.findAll({
+        where: {
+          id,
+        },
+        include: {
+          model: Petrol,
+        },
+      });
+      console.log(myTransaksi, "<<<");
+
+      res.status(200).json({
+        statuscode: 200,
+        data: {
+          myTransaksi,
+        },
+      });
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   }
