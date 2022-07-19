@@ -4,7 +4,8 @@ const errorHandler = require("../middlewares/errorHandler");
 
 router.post("/register", Controller.register);
 router.post("/login", Controller.login);
-router.get("/digimons", Controller.fetchDigimons);
+router.get("/digimon", Controller.fetchDigimons);
+router.get("/digimon/:name", Controller.fetchSearchedDigimon)
 router.use(errorHandler);
 
-module.exports = router;
+module.exports = router

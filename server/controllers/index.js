@@ -53,6 +53,18 @@ class Controller {
       next(err);
     }
   }
+
+  static async fetchSearchedDigimon(req, res, next) {
+    try {
+      const { name } = req.params;
+      const response = await axios.get(
+        `https://digimon-api.vercel.app/api/digimon/name/${name}`
+      );
+      res.status(200).json(response.data);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
