@@ -1,6 +1,8 @@
 const { Petrol, Transaksi, User } = require("../models");
 const { bcryptCompare, bcryptHash } = require("../helpers/bcrypt");
 const { signJwt, verifyJwt } = require("../helpers/jwt");
+const { OAuth2Client } = require("google-auth-library");
+const { CLIENT_ID } = process.env;
 
 class Controller {
   static async register(req, res, next) {
@@ -70,6 +72,44 @@ class Controller {
       });
     } catch (err) {
       console.log(err);
+      next(err);
+    }
+  }
+
+  static async google(req, res, next) {
+    try {
+      const client = new OAuth2Client(CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken: req.headers.credential,
+        audience: CLIENT_ID, //process.env.CLIENT_I
+      });
+
+      const payload = ticket.getPayload();
+      const [user, created] = await Customer.findOrCreate({
+        where: { email: payload.email },
+        defaults: {
+          email: payload.email,
+          password: "CobaTebak",
+          kendaraan: "Mobil",
+        },
+        hooks: false,
+      });
+
+      const idToken = {
+        id: user.id,
+      };
+      const token = signJwt(idToken);
+
+      res.status(200).json({
+        statuscode: 200,
+        data: {
+          accesstoken: token,
+          userId: user.id,
+          userId: created.id,
+          email: user.email,
+        },
+      });
+    } catch (err) {
       next(err);
     }
   }
