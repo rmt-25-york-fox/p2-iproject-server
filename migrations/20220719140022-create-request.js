@@ -29,11 +29,7 @@ module.exports = {
         }
       },
       picId: {
-        type: Sequelize.INTEGER,
-        references:{
-          model:'Users',
-          key:'id'
-        }
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

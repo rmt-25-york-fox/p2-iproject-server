@@ -7,7 +7,6 @@ const authenticate = async (req,res,next) =>{
         if(!access_token) throw {name: 'Unauthorized'}
         const decode = verifyToken(access_token)
         const resp = await User.findOne({where:{email:decode}})
-        if (!resp) throw {name: 'Unauthorized'}
         req.user = {
             id:resp.id
         }
