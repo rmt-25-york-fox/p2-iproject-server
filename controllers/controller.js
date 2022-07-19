@@ -73,5 +73,20 @@ class Controller {
       next(err);
     }
   }
+
+  static async getPetrol(req, res, next) {
+    try {
+      const petrol = await Petrol.findAll();
+
+      res.status(200).json({
+        statuscode: 200,
+        data: {
+          petrol,
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 module.exports = Controller;
