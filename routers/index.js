@@ -9,5 +9,6 @@ router.use(authenticate)
 router.post('/request',Requests.addRequest)
 router.get('/request',Requests.getRequest)
 router.patch('/request/:id',Requests.assignPic)
+router.patch('/requests/:id',Requests.finishRequest)
 
 module.exports = router

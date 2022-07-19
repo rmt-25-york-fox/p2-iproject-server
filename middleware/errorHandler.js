@@ -12,6 +12,15 @@ const errorHandler = (err,req,res,next) =>{
         case `Can't assign yourself`:
             res.status(401).json(err);
             break;
+        case `Can't edit status anymore`:
+            res.status(401).json(err);
+            break;
+        case `Request Forbidden`:
+            res.status(403).json(err);
+            break;
+        case `Request Taken already`:
+            res.status(403).json(err);
+            break;
         case 'Unauthorized':
             res.status(401).json('Token Invalid');
             break;
