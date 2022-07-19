@@ -58,6 +58,19 @@ class Controller {
       next(error);
     }
   }
+  static async selectDetailProduct(req, res, next) {
+    try {
+      const id = req.params.id;
+
+      const product = await Product.findByPk(id);
+      if (!product) {
+        throw { name: "not found detail" };
+      }
+      res.status(200).json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;
