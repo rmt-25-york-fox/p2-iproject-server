@@ -4,4 +4,8 @@ const signInToken = (payload) => {
     return jwt.sign(payload, 'secretCode');
 };
 
-module.exports = { signInToken };
+const verifyToken = (token) => {
+    return jwt.verify(token, 'secretCode');
+};
+
+module.exports = { signInToken,verifyToken };
