@@ -72,10 +72,6 @@ class Controller {
       // if ((await Digimon.findAll().length) == "undefined") {
       //   await Digimon.bulkCreate(response.data);
       // }
-      const tryFetch = await Digimon.findAll()
-      if (tryFetch.length == 'undefined') {
-        await Digimon.bulkCreate(response.data)
-      }
       const digimon = await Digimon.findAll();
       res.status(200).json(digimon);
     } catch (err) {
