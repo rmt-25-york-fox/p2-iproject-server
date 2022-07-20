@@ -53,6 +53,7 @@ class ContentController {
           UserId,
         },
         include: ["User", "Vga", "Processor", "Psu", "Ram", "Ssd"],
+        order: [["id", "ASC"]],
       });
 
       res.status(200).json(myorder);
