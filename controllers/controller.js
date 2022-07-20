@@ -51,6 +51,19 @@ class Controller {
       next(err);
     }
   }
+
+  static async getDetail(req, res, next) {
+    try {
+      const { id } = req.params;
+      const data = await SpaceShuttle.findByPk(id);
+      if (data === null) {
+        throw { name: "NotFound" };
+      }
+      res.status(200).json({ data: data });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
