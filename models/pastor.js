@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const {hashPassword} = require('../Helpers/brcyptHelper')
 module.exports = (sequelize, DataTypes) => {
   class Pastor extends Model {
     /**
@@ -62,5 +63,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Pastor',
   });
+  Pastor.beforeCreate((instance, options) =>{
+    instance.password = hashPassword(instance.password)
+  })
   return Pastor;
 };

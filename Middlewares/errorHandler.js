@@ -3,10 +3,10 @@ const errorHandler = async(err,req,res,next)=>{
     let code = 500
     let message = "Internal Server Error"
 
-    if(err.code == 401){
+    if(err.message == "Invalid email/password"){
         code = 401
         message = "Invalid email/password"
-    }else if(err.Error.name == 'SequelizeValidationError' || err.name == 'SequelizeUniqueConstraintError'){
+    }else if(err.name == 'SequelizeValidationError' || err.name == 'SequelizeUniqueConstraintError'){
         code = 400
         if(err.errors[0].message == "email must be unique"){
             message = "Email has already been registered"
@@ -20,11 +20,8 @@ const errorHandler = async(err,req,res,next)=>{
     }else if(err.name === "JsonWebTokenError"){
         code = 401
         message = 'Token Invalid'
-    }else if(err.message= "Movie is not found"){
-        message ="Movie is not found"
-        code = 400
     }
-    console.log(err.Error)
+    console.log(err)
     res.status(code).json({message})
 }
 
