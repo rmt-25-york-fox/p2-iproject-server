@@ -1,14 +1,22 @@
 const { User } = require('../models');
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
+const { convertPhoneNumberID } = require('../helpers/preProcess');
+const axios = require('axios');
 
 const register = async (req, res, next) => {
   try{
     const { phoneNumber, role } = req.body;
+
+    let convertedPhoneNumber = convertPhoneNumberID(phoneNumber);
+
+    const response = await axios.get(`https://phonevalidation.abstractapi.com/v1/
+    ?api_key=e3ceeff909a744838fd7fb5a8d73ff20&phone=${convertedPhoneNumber}`)
+
     const user = await User.create({
       fullName: 'Dummy',
       nickname: 'Dummy', 
-      phoneNumber, 
+      phoneNumber: convertedPhoneNumber,
       location: 'Dummy',
       role,
     });
@@ -21,6 +29,9 @@ const register = async (req, res, next) => {
     });
 
   } catch (err) {
+    if(err.response.status == 404)
+      err.name = "Nomor handphone tidak sesuai"
+    
     next(err);
   }
 }
@@ -32,9 +43,11 @@ const login = async (req, res, next) => {
     if(!phoneNumber)
       throw { name: 'Nomor handphone harus diisi' };
 
+    let convertedPhoneNumber = convertPhoneNumberID(phoneNumber);
+
     const user = await User.findOne({
       where: {
-        phoneNumber: phoneNumber
+        phoneNumber: convertedPhoneNumber
       }
     });
 

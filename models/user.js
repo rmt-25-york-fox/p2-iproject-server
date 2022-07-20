@@ -1,4 +1,5 @@
 'use strict';
+const { convertPhoneNumberID } = require('../helpers/preProcess');
 const {
   Model
 } = require('sequelize');
@@ -55,6 +56,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    hooks: {
+      beforeCreate: (instance, options) => {
+        instance.phoneNumber = convertPhoneNumberID(instance.phoneNumber);
+      },
+    },
   });
   return User;
 };
