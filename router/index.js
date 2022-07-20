@@ -7,6 +7,7 @@ router.post("/register", Controller.register);
 router.post("/login", Controller.login);
 router.get("/product", Controller.getProduct);
 router.get("/category", Controller.getCategory);
+router.get("/cost", Controller.getDeliveryCost);
 router.use(authentication);
 router.post("/order/:productId", Controller.addUserOrder);
 router.get("/order", Controller.getUserOrder);
