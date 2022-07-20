@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.DigimonUser, {
+      User.belongsToMany(models.Digimon, {
+        through: "DigimonUser",
         foreignKey: "UserId",
       });
       User.hasMany(models.Access_Token, {

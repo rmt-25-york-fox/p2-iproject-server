@@ -8,25 +8,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      img: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      level: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       UserId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: "Users",
           key: "id",
         },
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      },
+      DigimonId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Digimons",
+          key: "id",
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade",
       },
       createdAt: {
         allowNull: false,

@@ -1,4 +1,4 @@
-const { User, Access_Token } = require("../models");
+const { User, Access_Token, DigimonUser, Digimon } = require("../models");
 const { verifyPassword } = require("../helpers/bcrypt");
 const { signPayload } = require("../helpers/jwt");
 const axios = require("axios");
@@ -69,7 +69,11 @@ class Controller {
       const response = await axios.get(
         "https://digimon-api.vercel.app/api/digimon"
       );
-      res.status(200).json(response.data);
+      if ((await Digimon.findAll().length) == "undefined") {
+        await Digimon.bulkCreate(response.data);
+      }
+      const digimon = await Digimon.findAll();
+      res.status(200).json(digimon);
     } catch (err) {
       next(err);
     }
@@ -137,6 +141,42 @@ class Controller {
         }
       );
       res.status(200).json(leaderboard.data);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async winnerPrize(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { digiId } = req.params;
+      const findDigi = await Digimon.findByPk(digiId);
+      if (!findDigi) next({ name: "DigiNotFound" });
+      const userDigimon = await DigimonUser.create({
+        UserId: id,
+        DigimonId: digiId,
+      });
+      res.status(201).json({
+        UserId: userDigimon.UserId,
+        DigiId: userDigimon.DigimonId,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async showMyDigimons(req, res, next) {
+    try {
+      const { id } = req.user;
+      const response = await DigimonUser.findAll({
+        where: {
+          UserId: id,
+        },
+        include: {
+           model: Digimon
+        }
+      });
+      res.status(200).json(response)
     } catch (err) {
       next(err);
     }
