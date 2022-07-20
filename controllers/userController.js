@@ -4,17 +4,20 @@ const { signToken } = require('../helpers/jwt');
 
 const register = async (req, res, next) => {
   try{
-    const { fullName, nickname, phoneNumber, location } = req.body;
+    const { phoneNumber, role } = req.body;
     const user = await User.create({
       fullName: 'Dummy',
       nickname: 'Dummy', 
       phoneNumber, 
-      location: 'Dummy'
+      location: 'Dummy',
+      role,
     });
     
     res.status(201).json({ 
       id: user.id,
-      email: user.phoneNumber,
+      fullName: user.fullName,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
     });
 
   } catch (err) {
@@ -43,14 +46,16 @@ const login = async (req, res, next) => {
     
     const access_token = signToken({
       id: user.id,
-      email: user.email
+      fullName: user.fullName,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
     });
     
     res.status(200).json({
-      statusCpde: 200,
       access_token: access_token,
       id: user.id,
-      email: user.email,
+      fullName: user.fullName,
+      phoneNumber: user.phoneNumber,
       role: user.role,
     });
 

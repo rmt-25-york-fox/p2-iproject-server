@@ -12,13 +12,7 @@ const errorHandler = (err, req, res, next) => {
         message: err.errors
       });
       break;
-    case 'Error not found':
-      res.status(404).json({
-        statusCode: 404,
-        message: err.name
-      });
-      break;
-    case 'Invalid email or password':
+    case 'Nomor handphone harus diisi':
       res.status(401).json({
         statusCode: 401,
         message: err.name
@@ -40,6 +34,12 @@ const errorHandler = (err, req, res, next) => {
       res.status(403).json({
         statusCode: 403,
         message: 'You are not authorized',
+      });
+      break;
+    case 'Data tidak ditemukan':
+      res.status(404).json({
+        statusCode: 404,
+        message: err.name
       });
       break;
     default:
