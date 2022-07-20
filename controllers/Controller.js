@@ -150,7 +150,7 @@ class Contoller {
       const { destination, courier } = req.body;
       const origin = 9;
       const weight = 1;
-      const response = axios({
+      const response = await axios({
         method: "POST",
         url: "https://api.rajaongkir.com/starter/cost",
         headers: {
@@ -163,9 +163,9 @@ class Contoller {
           courier,
         },
       });
-      const cost = response.data.result[0].costs[0].value;
-      res.status(200).json({ cost });
+      res.status(200).json({ data: response.data.rajaongkir.results });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
