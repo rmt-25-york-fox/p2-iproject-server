@@ -98,6 +98,17 @@ class Requests {
             next(err)
         }
     }
+    static async userInfo (req,res,next){
+        try {
+            const id = req.user.id
+            const resp = await User.findOne({where:{id}})
+            res.status(200).json(
+                resp
+            )
+        } catch (err) {
+            next(err)
+        }
+    }
 }
 
 module.exports = Requests
