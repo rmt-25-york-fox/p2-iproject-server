@@ -44,6 +44,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { msg: "Lokasi harus diisi" },
       }
     },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: "Role harus diisi" },
+        notEmpty: { msg: "Role harus diisi" },
+      }
+    },
   }, {
     sequelize,
     modelName: 'User',
