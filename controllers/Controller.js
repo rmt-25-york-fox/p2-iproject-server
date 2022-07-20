@@ -147,7 +147,27 @@ class Contoller {
 
   static async getDeliveryCost(req, res, next) {
     try {
-    } catch (err) {}
+      const { destination, courier } = req.body;
+      const origin = 9;
+      const weight = 1;
+      const response = axios({
+        method: "POST",
+        url: "https://api.rajaongkir.com/starter/cost",
+        headers: {
+          key: process.env.R_K_API,
+        },
+        data: {
+          origin,
+          destination,
+          weight,
+          courier,
+        },
+      });
+      const cost = response.data.result[0].costs[0].value;
+      res.status(200).json({ cost });
+    } catch (err) {
+      next(err);
+    }
   }
 }
 
