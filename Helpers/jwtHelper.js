@@ -7,7 +7,7 @@ const createToken = (payload) =>{
 }
 
 const verifyToken = (token) =>{
-    return jwt.verify(token)
+    return jwt.verify(token, "key-ngasal")
 }
 
 module.exports = {createToken, verifyToken}

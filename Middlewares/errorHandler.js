@@ -20,6 +20,12 @@ const errorHandler = async(err,req,res,next)=>{
     }else if(err.name === "JsonWebTokenError"){
         code = 401
         message = 'Token Invalid'
+    }else if(err.message == "Please re-login"){
+        code = 401
+        message = "Please re-login"
+    }else if (err.message == "Unauthorized Access"){
+        code = 403
+        message = "Unauthorized Access"
     }
     console.log(err)
     res.status(code).json({message})

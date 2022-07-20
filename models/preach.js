@@ -46,5 +46,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Preach',
   });
+  Preach.beforeCreate((instance, options)=>{
+    instance.date = date +" 09:03:49"
+  })
   return Preach;
 };

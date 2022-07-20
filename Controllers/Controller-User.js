@@ -9,13 +9,16 @@ class Controller {
 
             const newMember = await Member.create({name , email, password})
             const payload = {
-                id: newMember.id
+                id: newMember.id,
+                email: newMember.email
+
             }
             const token = createToken(payload)
 
             res.status(201).json({
                 access_token: token,
-                name: newMember.name
+                name: newMember.name,
+                id:newMember.id
             })
             
         } catch (err) {
@@ -29,13 +32,17 @@ class Controller {
 
             const newPastor = await Pastor.create({name , email, password})
             const payload = {
-                id: newPastor.id
+                id: newPastor.id,
+                email: newPastor.email
+
             }
             const token = createToken(payload)
 
             res.status(201).json({
                 access_token: token,
-                name: newPastor.name
+                name: newPastor.name,
+                id: newPastor.id
+
             })
             
         } catch (err) {
@@ -43,24 +50,31 @@ class Controller {
         }
     }
     static async login(req,res,next){
+
         try {
             const { email , password} = req.body
-
+            console.log(email)
             const member = await Member.findOne({where: {
                 email : email
             }})
             let pastor;
             let validatePass;
+            let payload;
             if(!member){
                 pastor = await Pastor.findOne({where: {
                     email : email
                 }})
                 if(pastor){
                 validatePass = comparePassword(password , pastor.password)
+
                 }else{
                     throw ({message:"Invalid email/password"})
                 }
                 if(validatePass){
+                    payload = {
+                        id: pastor.id,
+                        email: pastor.email
+                    }
                     const token = createToken(payload)
                     res.status(200).json(
                         {
@@ -75,6 +89,12 @@ class Controller {
             }else{
                 validatePass = comparePassword(password , member.password)
                 if(validatePass){
+                    payload = {
+                        id: member.id,
+                        email: member.email
+
+                    }
+
                     const token = createToken(payload)
 
                     res.status(200).json(
