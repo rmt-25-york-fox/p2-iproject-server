@@ -144,6 +144,11 @@ class Contoller {
       next(err);
     }
   }
+
+  static async getDeliveryCost(req, res, next) {
+    try {
+    } catch (err) {}
+  }
 }
 
 module.exports = Contoller;
