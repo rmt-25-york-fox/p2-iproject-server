@@ -1,7 +1,8 @@
-const { User, Customer } = require("../models");
+const { User } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { OAuth2Client } = require("google-auth-library");
+let axios = require("axios");
 
 const getHome = async (req, res) => {
   res.send("Welcome Home");
@@ -85,7 +86,45 @@ const googleSignIn = async (req, res, next) => {
   }
 };
 
+const tokenLeaderboard = async (req, res, next) => {
+  try {
+    const grant_type = "client_credentials";
+    const scope = "endpoint_client";
+    const client_id = "jvOOAmkRowcy4qT8UmnbtOMT4FlVSfZcKO0kalcz";
+    const client_secret = "o7WP14JnsVRhHKlm5helhr55rqfMCPE1XBQYGAm8";
+
+    const access_token = await axios.post(
+      `https://api.globalstats.io/oauth/access_token`,
+      {
+        grant_type,
+        scope,
+        client_id,
+        client_secret,
+      }
+    );
+    // console.log(access_token.data);
+
+    const { name, score = 0 } = req.body;
+    const data = { name: name, values: { score: score } };
+    const create = await axios.post(
+      `https://api.globalstats.io/v1/statistics`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token.data.access_token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    res.status(201).json(create.data);
+  } catch (error) {
+    // console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
+  tokenLeaderboard,
   getHome,
   register,
   login,

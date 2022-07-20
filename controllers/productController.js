@@ -1,5 +1,3 @@
-const { Product, Category, User, History, Wishlist } = require("../models");
-const { Op } = require("sequelize");
 let axios = require("axios");
 
 const allPokemon = async (req, res, next) => {
@@ -13,7 +11,6 @@ const allPokemon = async (req, res, next) => {
       );
       return data.data;
     });
-
     res.status(200).json(await Promise.all(result));
   } catch (error) {
     // console.log(error);
@@ -35,7 +32,6 @@ const pokemonDetail = async (req, res, next) => {
 };
 
 module.exports = {
-  // getPokemon,
   pokemonDetail,
   allPokemon,
 };
