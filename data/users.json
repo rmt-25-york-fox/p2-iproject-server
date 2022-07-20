@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Grethel Simkin",
+    "email": "888@gmail.com",
+    "password": "$2b$08$NZSUPVgRrx1s7yjCs93ChugNSNp2LZ7TC9hR5.2hNV0U295kL7M8.",
+    "age": 30,
+    "gender": "male",
+    "height": 172,
+    "weight": 92,
+    "neck": 50,
+    "waist": 96,
+    "hip": 92,
+    "activitylevel": 1,
+    "goal": "extremelose"
+  }
+]

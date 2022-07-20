@@ -1,0 +1,42 @@
+[
+  {
+    "authorId": 1,
+    "SportId": 1
+  },
+  {
+    "authorId": 2,
+    "SportId": 2
+  },
+  {
+    "authorId": 3,
+    "SportId": 3
+  },
+  {
+    "authorId": 4,
+    "SportId": 4
+  },
+  {
+    "authorId": 5,
+    "SportId": 5
+  },
+  {
+    "authorId": 6,
+    "SportId": 6
+  },
+  {
+    "authorId": 7,
+    "SportId": 7
+  },
+  {
+    "authorId": 8,
+    "SportId": 8
+  },
+  {
+    "authorId": 9,
+    "SportId": 9
+  },
+  {
+    "authorId": 10,
+    "SportId": 10
+  }
+]
