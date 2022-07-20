@@ -1,4 +1,5 @@
 const { Vga, Psu, Ram, Processor, Ssd, MyOrder } = require("../models/index");
+const midtransClient = require("midtrans-client");
 const axios = require("axios");
 
 class ContentController {
@@ -181,6 +182,41 @@ class ContentController {
       });
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async postPayment(req, res, next) {
+    try {
+      const { price } = req.body;
+
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER_KEY,
+      });
+
+      let parameter = {
+        transaction_details: {
+          order_id: Math.floor(Math.random() * 10000000000000),
+          gross_amount: price,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          email: req.findUser.email,
+        },
+      };
+
+      const transaction = await snap.createTransaction(parameter);
+      let transactionToken = transaction.token;
+
+      res.status(201).json({
+        statusCode: 201,
+        token: transactionToken,
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 }

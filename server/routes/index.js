@@ -21,4 +21,6 @@ router.get("/shipping/province", ContentController.getProvince);
 router.get("/shipping/city", ContentController.getCity);
 router.post("/shipping/cost", ContentController.getCost);
 
+router.post("/payment", ContentController.postPayment);
+
 module.exports = router;
