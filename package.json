@@ -4,7 +4,7 @@
   "description": "Individual Project - Server",
   "main": "index.js",
   "scripts": {
-    "start": "node www/bin",
+    "start": "node bin/www",
     "init:db": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
     "init:db:test": "sequelize --env test db:drop && sequelize --env test db:create && sequelize --env test db:migrate && sequelize --env test db:seed:all"
   },
