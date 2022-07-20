@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: { msg: "Email is required" },
           notNull: { msg: "Email is required" },
+          isEmail: { msg: "Email is not valid" },
         },
       },
       amount: {
@@ -31,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       message: DataTypes.STRING,
+      orderId: DataTypes.STRING,
+      paymentStatus: DataTypes.STRING,
     },
     {
       sequelize,
@@ -38,8 +41,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Donation.beforeCreate((instance, options) => {
-    instance.name = "Anonymous";
-    instance.message = "Keep your hard work!!";
-  })
+    if (!instance.name) {
+      instance.name = "Anonymous";
+    }
+
+    if (!instance.message) {
+      instance.message = "Keep your hard work!!";
+    }
+
+    instance.orderId = new Date().getTime();
+    instance.paymentStatus = "pending";
+  });
   return Donation;
 };

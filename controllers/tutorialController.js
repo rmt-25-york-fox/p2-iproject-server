@@ -12,19 +12,20 @@ class TutorialController {
           q: "nodejs tutorial",
           type: "video",
           order: "viewCount",
-          maxResults: "20",
+          maxResults: "12",
           key: youtubeApiKey,
         },
       });
-      const nodejsTutorials = data.items.map((item) => {
+      const nodejsTutorials = data.items.map((item, index) => {
         return {
+          id: index + 1,
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.high.url,
           channelTitle: item.snippet.channelTitle,
           channelUrl: `${youtubeBaseUrl}/channel/${item.snippet.channelId}`,
           description: item.snippet.description,
           publishedAt: item.snippet.publishedAt,
-          videoUrl: `${youtubeBaseUrl}/watch?v=${item.id.videoId}`,
+          videoUrl: `${youtubeBaseUrl}/embed/${item.id.videoId}`,
         };
       });
 
@@ -39,26 +40,27 @@ class TutorialController {
       const { data } = await axios.get(youtubeSearchApiUrl, {
         params: {
           part: "snippet",
-          q: "golang tutorial",
+          q: "golang web tutorial",
           type: "video",
           order: "viewCount",
-          maxResults: "20",
+          maxResults: "12",
           key: youtubeApiKey,
         },
       });
-      const phpTutorials = data.items.map((item) => {
+      const golangTutorials = data.items.map((item, index) => {
         return {
+          id: index + 1,
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.high.url,
           channelTitle: item.snippet.channelTitle,
           channelUrl: `${youtubeBaseUrl}/channel/${item.snippet.channelId}`,
           description: item.snippet.description,
           publishedAt: item.snippet.publishedAt,
-          videoUrl: `${youtubeBaseUrl}/watch?v=${item.id.videoId}`,
+          videoUrl: `${youtubeBaseUrl}/embed/${item.id.videoId}`,
         };
       });
 
-      res.status(200).json(phpTutorials);
+      res.status(200).json(golangTutorials);
     } catch (err) {
       next(err);
     }
@@ -72,23 +74,24 @@ class TutorialController {
           q: "java tutorial",
           type: "video",
           order: "viewCount",
-          maxResults: "20",
+          maxResults: "12",
           key: youtubeApiKey,
         },
       });
-      const phpTutorials = data.items.map((item) => {
+      const javaTutorials = data.items.map((item, index) => {
         return {
+          id: index + 1,
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.high.url,
           channelTitle: item.snippet.channelTitle,
           channelUrl: `${youtubeBaseUrl}/channel/${item.snippet.channelId}`,
           description: item.snippet.description,
           publishedAt: item.snippet.publishedAt,
-          videoUrl: `${youtubeBaseUrl}/watch?v=${item.id.videoId}`,
+          videoUrl: `${youtubeBaseUrl}/embed/${item.id.videoId}`,
         };
       });
 
-      res.status(200).json(phpTutorials);
+      res.status(200).json(javaTutorials);
     } catch (err) {
       next(err);
     }
