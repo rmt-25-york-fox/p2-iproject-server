@@ -47,7 +47,11 @@ class ContentController {
 
   static async getMyOrder(req, res, next) {
     try {
+      const UserId = req.findUser.id;
       const myorder = await MyOrder.findAll({
+        where: {
+          UserId,
+        },
         include: ["User", "Vga", "Processor", "Psu", "Ram", "Ssd"],
       });
 
