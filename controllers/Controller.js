@@ -117,6 +117,13 @@ class Contoller {
             order_id: user.id + new Date().getTime().toString(),
             gross_amount: totalOrder,
           },
+          customer_details: {
+            first_name: user.name,
+            last_name: user.name,
+            email: user.email,
+            phone: user.phoneNumber,
+            notes: "Thank you for your purchase!",
+          },
         },
       });
       const payment = await Payment.create({
