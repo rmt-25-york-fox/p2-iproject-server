@@ -1,4 +1,12 @@
-const { Vga, Psu, Ram, Processor, Ssd, MyOrder } = require("../models/index");
+const {
+  Vga,
+  Psu,
+  Ram,
+  Processor,
+  Ssd,
+  MyOrder,
+  Showcase,
+} = require("../models/index");
 const midtransClient = require("midtrans-client");
 const axios = require("axios");
 
@@ -43,6 +51,18 @@ class ContentController {
       });
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  }
+
+  static async getShowcase(req, res, next) {
+    try {
+      const showcase = await Showcase.findAll({});
+
+      res.status(200).json({
+        showcase,
+      });
+    } catch (error) {
       next(error);
     }
   }

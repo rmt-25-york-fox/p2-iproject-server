@@ -9,7 +9,7 @@ router.post("/register", UserController.postRegister);
 router.post("/login", UserController.postLogin);
 // router.post("/google-sign-in", UserController.xxx);
 router.get("/product", ContentController.getProduct); //nampilin data produk masing2 kategori
-router.get("/showcase");
+router.get("/showcase", ContentController.getShowcase);
 
 router.use(authentication);
 router.post("/myorder", ContentController.postMyOrder); //bikin myorder, nanti bisa di edit
