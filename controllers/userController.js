@@ -24,3 +24,24 @@ const register = async (req, res, next) => {
     next(err);
   }
 };
+
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({
+      where: { email },
+    });
+    // console.log({ user });
+    if (!user) {
+      throw { name: "User Not Found" };
+    }
+    if (!comparePassword(password, user.password)) {
+      throw { name: "User Not Found" };
+    } else {
+      const access_token = signToken({ id: user.id, email: user.email });
+      res.status(200).json({ access_token, username: user.username });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
