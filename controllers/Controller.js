@@ -103,7 +103,7 @@ class Contoller {
         },
       };
       const response = await axios({
-        method: "post",
+        method: "POST",
         url: "https://api.sandbox.midtrans.com/v1/payment-links",
         headers: {
           Authorization:
@@ -111,7 +111,13 @@ class Contoller {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        data: data,
+        data: {
+          payment_type: "qris",
+          transaction_details: {
+            order_id: "order102",
+            gross_amount: 789000,
+          },
+        },
       });
       const payment = await Payment.create({
         paymentUrl: response.data.payment_url,
