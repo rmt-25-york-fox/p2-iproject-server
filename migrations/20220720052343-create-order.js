@@ -18,8 +18,9 @@ module.exports = {
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      total: {
-        type: Sequelize.INTEGER,
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: "pending",
       },
       createdAt: {
         allowNull: false,

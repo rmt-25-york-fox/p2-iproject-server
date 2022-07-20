@@ -1,4 +1,11 @@
-const { User, Product, UserOrder, Order, Payment } = require("../models");
+const {
+  User,
+  Product,
+  UserOrder,
+  Order,
+  Payment,
+  Category,
+} = require("../models");
 const { comparePassword, signToken } = require("../helpers/helpers");
 const axios = require("axios");
 
@@ -83,46 +90,27 @@ class Contoller {
       const { totalOrder } = req.query;
       const userId = req.user.id;
       const user = await User.findByPk(+userId);
-      const userOrder = await UserOrder.findAll({
-        where: { UserId: userId },
-        include: [{ model: Product }],
-      });
-      const data = {
-        transaction_details: {
-          order_id: user.id + new Date().getTime(),
-          gross_amount: totalOrder,
-        },
-        enabled_payments: ["gopay", "bca_va"],
-        item_details: userOrder,
-        customer_details: {
-          first_name: user.name,
-          last_name: user.name,
-          email: user.email,
-          phone: user.phoneNumber,
-          notes: "Thank you for your purchase!",
-        },
-      };
+      if (!user) throw { name: "NotFound" };
       const response = await axios({
         method: "POST",
         url: "https://api.sandbox.midtrans.com/v1/payment-links",
         headers: {
-          Authorization:
-            "Basic U0ItTWlkLXNlcnZlci1pSU1iRnZKWTYyeWhhMzFFakFoMFRuVkU6",
+          Authorization: process.env.MID_API,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         data: {
           payment_type: "qris",
           transaction_details: {
-            order_id: user.id + new Date().getTime().toString(),
+            order_id: user.id + "-" + new Date().getTime().toString(),
             gross_amount: totalOrder,
           },
           customer_details: {
             first_name: user.name,
-            last_name: user.name,
             email: user.email,
             phone: user.phoneNumber,
-            notes: "Thank you for your purchase!",
+            notes:
+              "Thank you for your purchase. Please follow the instructions to pay.",
           },
         },
       });
@@ -131,9 +119,28 @@ class Contoller {
         UserId: userId,
       });
       UserOrder.destroy({ where: { UserId: userId } });
-      res.status(200).json({ payment });
+      Order.create({ UserId: userId });
+      res.status(200).json({ payment, order_id: response.data.order_id });
     } catch (err) {
       console.log(err);
+      next(err);
+    }
+  }
+
+  static async getProduct(req, res, next) {
+    try {
+      const product = await Product.findAll();
+      res.status(200).json(product);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getCategory(req, res, next) {
+    try {
+      const category = await Category.findAll();
+      res.status(200).json(category);
+    } catch (err) {
       next(err);
     }
   }

@@ -6,6 +6,7 @@ module.exports = {
       {
         name: "Pizza peperoni",
         CategoryId: 1,
+        imageUrl: "test",
         description: "pizza with peperoni",
         price: "90000",
         createdAt: new Date(),
@@ -14,6 +15,7 @@ module.exports = {
       {
         name: "Pizza Sosig",
         CategoryId: 1,
+        imageUrl: "test",
         description: "pizza with Sossig",
         price: "85000",
         createdAt: new Date(),
@@ -22,6 +24,7 @@ module.exports = {
       {
         name: "Pizza peperoni & pinapple",
         CategoryId: 1,
+        imageUrl: "test",
         description: "pizza with peperoni and pinapple",
         price: "90000",
         createdAt: new Date(),
@@ -30,6 +33,7 @@ module.exports = {
       {
         name: "Pizza cheese",
         CategoryId: 1,
+        imageUrl: "test",
         description: "pizza with extra cheesy",
         price: "90000",
         createdAt: new Date(),
