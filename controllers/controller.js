@@ -84,6 +84,30 @@ class Controller {
       next(err);
     }
   }
+
+  static async editInfo(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { name, information, imgUrl } = req.body;
+      const updateInfo = await SpaceShuttle.update(
+        {
+          name,
+          information,
+          imgUrl,
+        },
+        { where: { id } }
+      );
+      const data = await SpaceShuttle.findByPk(id);
+      const msg = `SpaceShuttle with id ${data.id} updated`;
+      res.status(200).json({
+        statusCode: 200,
+        message: msg,
+        data: data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
