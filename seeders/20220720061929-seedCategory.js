@@ -6,22 +6,22 @@ module.exports = {
       "Categories",
       [
         {
-          name: "Pizza",
+          name: "Fruits",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "Pasta",
+          name: "Meat",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "Drink",
+          name: "Snacks",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "Bread",
+          name: "Dairy",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
