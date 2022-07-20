@@ -111,13 +111,7 @@ class Contoller {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        data: {
-          payment_type: "qris",
-          transaction_details: {
-            order_id: "order102",
-            gross_amount: 789000,
-          },
-        },
+        data: JSON.stringify(data),
       });
       const payment = await Payment.create({
         paymentUrl: response.data.payment_url,
