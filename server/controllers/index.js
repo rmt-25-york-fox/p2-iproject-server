@@ -65,6 +65,47 @@ class Controller {
       next(err);
     }
   }
+
+  static async createUserGlobalStats(req, res, next) {
+    try {
+      const grant_type = "client_credentials";
+      const scope = "endpoint_client";
+      const client_id = "ydtB4OgQgxnKVkE8HToqZBId9dVlQTeo7I0cwg2N";
+      const client_secret = "pyKJdSr6hR6TAj3OeoE7D3el3qSjsG8SeSCrL3y3";
+
+      const access_token = await axios({
+        method: "post",
+        url: "https://api.globalstats.io/oauth/access_token",
+        data: {
+          grant_type,
+          scope,
+          client_id,
+          client_secret,
+        },
+      });
+
+      const { name, score = 0 } = req.body;
+      const data = {
+        name: name,
+        values: {
+          score: score,
+        },
+      };
+
+      const createUserStats = await axios.post(
+        `https://api.globalstats.io/v1/statistics`,
+        data,
+        {
+          headers: {
+            Authorization: `${access_token.data.token_type} ${access_token.data.access_token}`,
+          },
+        }
+      );
+      res.status(201).json(createUserStats.data);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
