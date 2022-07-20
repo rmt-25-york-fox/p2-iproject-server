@@ -20,3 +20,22 @@ const allPokemon = async (req, res, next) => {
     next(error);
   }
 };
+
+const pokemonDetail = async (req, res, next) => {
+  try {
+    let { name } = req.params;
+    // console.log(name);
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
+    );
+    res.status(200).json(response.data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  // getPokemon,
+  pokemonDetail,
+  allPokemon,
+};
