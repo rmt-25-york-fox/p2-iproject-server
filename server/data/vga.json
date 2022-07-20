@@ -1,0 +1,32 @@
+[
+  {
+    "name": "MSI Geforce RTX 2060 6GB GDDR6",
+    "price": 4900000,
+    "power": 49,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2021/4/14/26fdeb94-974b-4d5d-bd69-8ef4c2d76d52.jpg"
+  },
+  {
+    "name": "ASUS ROG STRIX RTX 3060 12GB GDDR6",
+    "price": 8000000,
+    "power": 80,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/3/25/1b061e67-94f9-468b-9bdb-994f0da636e8.png"
+  },
+  {
+    "name": "VGA ASROCK AMD RADEON RX 6600 XT PHANTOM GAMING D 8GB OC RX 6600XT",
+    "price": 6000000,
+    "power": 60,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/2/3/cf91f84b-52e0-4431-9527-4d1811fff2e3.jpg"
+  },
+  {
+    "name": "Colorful GeForce RTX 2060 NB V2-V 6GB GDDR6",
+    "price": 5500000,
+    "power": 55,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/2/17/678a9f73-86f6-4ea4-91d5-ff3fe23cfc29.jpg"
+  },
+  {
+    "name": "BIOSTAR Radeon RX 6800 XT 16GB",
+    "price": 14500000,
+    "power": 92,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/4/12/966eca76-a0ce-4c9b-93cc-80d8e9cdb809.jpg"
+  }
+]

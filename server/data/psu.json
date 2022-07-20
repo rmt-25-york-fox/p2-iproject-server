@@ -1,0 +1,32 @@
+[
+  {
+    "name": "CORSAIR RM850 White | PSU 850W 80+ Gold Fully Modular CP-9020232-EU",
+    "price": 2250000,
+    "power": 60,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2021/9/1/39bb22ea-4bb6-4748-a186-30943c0c541e.jpg"
+  },
+  {
+    "name": "CORSAIR RM1000X | PSU 1000W 80+ Gold Fully Modular CP-9020201-EU",
+    "price": 3400000,
+    "power": 82,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2021/9/1/b77ed329-b6e1-49e2-878b-477bb0403d84.jpg"
+  },
+  {
+    "name": "COOLER MASTER V850 GOLD - V2 WHITE EDITION",
+    "price": 2300000,
+    "power": 55,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2021/1/26/6a0904f4-9378-4935-b8b5-657b64d31116.jpg"
+  },
+  {
+    "name": "ASUS - ROG STRIX 650G Fully Modular 80 Plus Gold 650W ATX Power Supply",
+    "price": 2300000,
+    "power": 61,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/product-1/2019/12/26/5373285/5373285_6e4c4aba-16b0-412f-9949-7b8aa6e59a41_800_800"
+  },
+  {
+    "name": "Asus - ROG-THOR-1200P / ROG THOR 1200W / ROG THOR 1200 W",
+    "price": 5900000,
+    "power": 92,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/product-1/2020/4/30/5373285/5373285_a882da62-fa63-4ad1-bec1-0740d2cc0fd9_800_800"
+  }
+]
