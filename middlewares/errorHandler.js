@@ -42,6 +42,12 @@ const errorHandler = (err, req, res, next) => {
         message: err.name
       });
       break;
+    case 'Nomor handphone tidak sesuai':
+      res.status(404).json({
+        statusCode: 404,
+        message: err.name
+      });
+      break;
     default:
       res.status(500).json({
         statusCode: 500,
