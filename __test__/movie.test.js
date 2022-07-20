@@ -6,7 +6,7 @@ dataUser.forEach((el) => {
   el.createdAt = new Date();
   el.updatedAt = new Date();
 });
-const dataMovie = require("../data/movies.json");
+const dataMovie = require("../data/sports.json");
 dataMovie.forEach((el) => {
   el.createdAt = new Date();
   el.updatedAt = new Date();

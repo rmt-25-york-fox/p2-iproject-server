@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   User.init(
     {
       name: DataTypes.STRING,
-      username: DataTypes.STRING,
 
       email: {
         allowNull: false,
@@ -90,10 +89,6 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate(instance) {
           instance.password = bcrypt.hashSync(instance.password, 8);
-          instance.name = "Cody";
-          instance.username = "hacktiv8";
-          instance.phoneNumber = "081332322233";
-          instance.address = "Jl. Sultan Iskandar no. 3";
           instance.createdAt = new Date();
           instance.updatedAt = new Date();
         },
