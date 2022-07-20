@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const router = require("./routes");
+const router = require("./router/index");
 const errorHandler = require("./middlewares/errorHandlers");
 
 app.use(cors());
