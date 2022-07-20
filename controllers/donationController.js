@@ -2,6 +2,15 @@ const snap = require("../helpers/midtrans");
 const { Donation } = require("../models");
 
 class DonationController {
+  static async getDonations(req, res, next) {
+    try {
+      const donations = await Donation.findAll({ where: { paymentStatus: "success" } });
+      res.status(200).json(donations);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async payment(req, res, next) {
     try {
       const { name, email, amount, message } = req.body;
@@ -12,12 +21,22 @@ class DonationController {
         message,
       });
 
-      const transaction = await snap.createTransaction({
+      let parameter = {
         transaction_details: {
           order_id: newDonation.orderId,
           gross_amount: newDonation.amount,
         },
-      });
+        customer_details: {
+          first_name: newDonation.name,
+          email: newDonation.email,
+        },
+        enabled_payments: ["credit_card"],
+        credit_card: {
+          secure: true,
+        },
+      };
+
+      const transaction = await snap.createTransaction(parameter);
 
       let transactionToken = transaction.token;
       let transactionRedirectUrl = transaction.redirect_url;
@@ -33,7 +52,7 @@ class DonationController {
   static async updatePaymentStatus(req, res, next) {
     try {
       const { orderId } = req.body;
-      
+
       const donation = await Donation.findOne({
         where: {
           orderId,
