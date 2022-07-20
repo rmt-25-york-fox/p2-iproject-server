@@ -35,11 +35,13 @@ class Requests {
             const checkId = await Request.findOne({where:{id}})
             if(picId === checkId.UserId) throw {name:`Can't assign yourself`}
             if(checkId.status === 'Taken') throw {name:'Request Taken already'}
-            const resp = await Request.update({status,picId,updatedAt:new Date()},{where:{id}})
+            const pic = await User.findOne({where:{id:picId}})
+            const resp = await Request.update({status,picId,picName:pic.name,updatedAt:new Date()},{where:{id}})
             res.status(200).json(
                 'Success assign'
             )
         } catch (err) {
+            
             next(err)
             
         }
@@ -67,6 +69,17 @@ class Requests {
             const id = req.params.id
             const resp = await Request.findOne({where:{id},include:[User]})
             if(!resp) throw {name:'Request Not Found'}
+            res.status(200).json(
+                resp
+            )
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async myRequest (req,res,next){
+        try {
+            const UserId = req.params.UserId
+            const resp = await Request.findAll({where:{UserId},include:[User]})
             res.status(200).json(
                 resp
             )

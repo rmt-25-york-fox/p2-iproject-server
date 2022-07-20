@@ -10,6 +10,7 @@ router.post('/request',Requests.addRequest)
 router.get('/request',Requests.getRequest)
 router.get('/request/:id',Requests.getDetailRequest)
 router.patch('/request/:id',Requests.assignPic)
+router.get('/myRequests/:UserId',Requests.myRequest)
 router.patch('/requests/:id',Requests.finishRequest)
 
 module.exports = router
