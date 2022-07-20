@@ -55,6 +55,21 @@ class ContentController {
     }
   }
 
+  static async deleteMyOrderById(req, res, next) {
+    try {
+      const id = req.params.id;
+      console.log(id);
+      await MyOrder.destroy({
+        where: {
+          id: id,
+        },
+      });
+      console.log(id);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async getShowcase(req, res, next) {
     try {
       const showcase = await Showcase.findAll({});
