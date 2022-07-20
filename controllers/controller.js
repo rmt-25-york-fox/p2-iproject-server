@@ -23,6 +23,25 @@ class Controller {
       next(err);
     }
   }
+
+  static async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        throw { name: "Unauthorized" };
+      }
+      const isValidPassword = comparePass(password, user.password);
+      if (!isValidPassword) {
+        throw { name: "Unauthorized" };
+      }
+      const payload = { id: user.id };
+      const token = generateToken(payload);
+      res.status(200).json({ statusCode: 200, access_token: token, email: user.email });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
