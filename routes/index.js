@@ -10,6 +10,7 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.post("/googleSignIn", userController.googleSignIn);
 router.post("/userBoard", userController.tokenLeaderboard);
+router.post("/leaderboards", userController.getLeaderBoard);
 
 router.use(authentication);
 router.use(productsRoutes);
