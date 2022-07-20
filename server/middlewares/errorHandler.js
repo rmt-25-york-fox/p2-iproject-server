@@ -18,6 +18,9 @@ const errorHandler = (err, req, res, next) => {
     case "PasswordRequired":
       res.status(400).json({ message: "Silahkan masukkan password" });
       break;
+    case "NameRequired":
+      res.status(400).json({ message: "Silahkan masukkan username" });
+      break;
     case "NotUser":
       res.status(401).json({ message: "Invalid email/password" });
       break;

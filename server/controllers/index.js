@@ -94,6 +94,7 @@ class Controller {
   static async createUserGlobalStats(req, res, next) {
     try {
       const { name, score = 0 } = req.body;
+      if (!name) next({name: 'NameRequired'})
       const data = {
         name: name,
         values: {
