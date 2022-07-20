@@ -89,7 +89,7 @@ class Contoller {
       });
       const data = {
         transaction_details: {
-          order_id: user.id + new Date(),
+          order_id: user.id + new Date().getTime(),
           gross_amount: totalOrder,
         },
         enabled_payments: ["gopay", "bca_va"],
