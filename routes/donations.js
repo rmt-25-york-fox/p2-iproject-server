@@ -1,8 +1,8 @@
 const express = require("express");
+const DonationController = require("../controllers/donationController");
 const router = express.Router();
 
-router.post("/", (req, res, next) => {
-  res.send("Hello World");
-});
+router.post("/", DonationController.createDonation);
+router.post("/payment", DonationController.payment);
 
 module.exports = router;
