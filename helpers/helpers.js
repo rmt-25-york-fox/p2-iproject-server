@@ -5,7 +5,7 @@ function signToken(payload) {
   return jwt.sign(payload, "SECRET_KEY");
 }
 
-function verify(payload) {
+function verifyToken(payload) {
   return jwt.verify(payload, "SECRET_KEY");
 }
 
@@ -13,13 +13,13 @@ function hashPassword(password) {
   return bcrypt.hashSync(password);
 }
 
-function compareHash(rawPass, password) {
+function comparePassword(rawPass, password) {
   return bcrypt.compareSync(rawPass, password);
 }
 
 module.exports = {
   signToken,
-  verify,
+  verifyToken,
   hashPassword,
-  compareHash,
+  comparePassword,
 };
