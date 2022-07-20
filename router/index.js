@@ -5,8 +5,8 @@ const router = require("express").Router();
 
 router.post("/register", Controller.register);
 router.post("/login", Controller.login);
-router.get("/product");
-router.get("/category");
+router.get("/product", Controller.getProduct);
+router.get("/category", Controller.getCategory);
 router.use(authentication);
 router.post("/order/:productId", Controller.addUserOrder);
 router.get("/order", Controller.getUserOrder);
