@@ -64,6 +64,26 @@ class Controller {
       next(err);
     }
   }
+
+  static async addNewData(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { name, information, imgUrl } = req.body;
+      const newData = await SpaceShuttle.create({
+        UserId: +id,
+        name,
+        information,
+        imgUrl,
+      });
+      const msg = `Data with id ${newData.id} created`;
+      res.status(201).json({
+        message: msg,
+        data: newData,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
