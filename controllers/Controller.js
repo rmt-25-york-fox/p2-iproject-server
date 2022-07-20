@@ -89,7 +89,7 @@ class Contoller {
       });
       const data = {
         transaction_details: {
-          order_id: user.id + new Date().getTime().toString(),
+          order_id: user.id + new Date().getTime(),
           gross_amount: totalOrder,
         },
         enabled_payments: ["gopay", "bca_va"],
@@ -111,7 +111,13 @@ class Contoller {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        data: JSON.stringify(data),
+        data: {
+          payment_type: "qris",
+          transaction_details: {
+            order_id: user.id + new Date().getTime().toString(),
+            gross_amount: totalOrder,
+          },
+        },
       });
       const payment = await Payment.create({
         paymentUrl: response.data.payment_url,
