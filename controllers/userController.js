@@ -3,6 +3,7 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { OAuth2Client } = require("google-auth-library");
 let axios = require("axios");
+const tokenBoard = require("../helpers/helper");
 
 const getHome = async (req, res) => {
   res.send("Welcome Home");
@@ -39,8 +40,14 @@ const login = async (req, res, next) => {
     if (!comparePassword(password, user.password)) {
       throw { name: "User Not Found" };
     } else {
+      const tokenStat = await tokenBoard();
+      // console.log(tokenStat);
       const access_token = signToken({ id: user.id, email: user.email });
-      res.status(200).json({ access_token, username: user.username });
+      res.status(200).json({
+        access_token,
+        username: user.username,
+        tokenStat,
+      });
     }
   } catch (err) {
     next(err);
@@ -103,7 +110,6 @@ const tokenLeaderboard = async (req, res, next) => {
       }
     );
     // console.log(access_token.data);
-
     const { name, score = 0 } = req.body;
     const data = { name: name, values: { score: score } };
     const create = await axios.post(
@@ -118,12 +124,33 @@ const tokenLeaderboard = async (req, res, next) => {
     );
     res.status(201).json(create.data);
   } catch (error) {
+    next(error);
+  }
+};
+
+const getLeaderBoard = async (req, res, next) => {
+  try {
+    const { limit = 10 } = req.body;
+    const data = { limit, additionals: ["shots", "time"] };
+    const getBoard = await axios.post(
+      `https://api.globalstats.io/v1/gtdleaderboard/score`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${await tokenBoard()}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    res.status(201).json(getBoard.data);
+  } catch (error) {
     // console.log(error);
     next(error);
   }
 };
 
 module.exports = {
+  getLeaderBoard,
   tokenLeaderboard,
   getHome,
   register,
