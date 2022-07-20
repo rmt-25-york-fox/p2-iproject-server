@@ -8,6 +8,7 @@ const {
 } = require("../models");
 const { comparePassword, signToken } = require("../helpers/helpers");
 const axios = require("axios");
+const { Op } = require("sequelize");
 
 class Contoller {
   static async register(req, res, next) {
@@ -129,7 +130,16 @@ class Contoller {
 
   static async getProduct(req, res, next) {
     try {
-      const product = await Product.findAll();
+      const { name } = req.query;
+      const options = {
+        include: [{ model: Category, where: {} }],
+      };
+      if (name) {
+        options.include[0].where.name = {
+          [Op.eq]: name,
+        };
+      }
+      const product = await Product.findAll(options);
       res.status(200).json(product);
     } catch (err) {
       next(err);
@@ -166,6 +176,19 @@ class Contoller {
       res.status(200).json({ data: response.data.rajaongkir.results });
     } catch (err) {
       console.log(err);
+      next(err);
+    }
+  }
+
+  static async handleStatusPayment(req, res, next) {
+    try {
+      const { id } = req.user;
+      const status = await Order.update(
+        { status: "Settlement" },
+        { where: { UserId: id } }
+      );
+      res.status(200).json({ message: "Payment Successful" });
+    } catch (err) {
       next(err);
     }
   }
