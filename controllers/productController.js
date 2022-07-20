@@ -1,3 +1,5 @@
+const { UserPokemon } = require("../models");
+
 let axios = require("axios");
 
 const allPokemon = async (req, res, next) => {
@@ -31,7 +33,51 @@ const pokemonDetail = async (req, res, next) => {
   }
 };
 
+const userPokemon = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const { name } = req.params;
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
+    );
+    // console.log(response.data.sprites.other["official-artwork"].front_default);
+    const createPokemon = await UserPokemon.create({
+      name: response.data.name.toUpperCase(),
+      imgUrl: response.data.sprites.other["official-artwork"].front_default,
+      type: response.data.types[0].type.name,
+      UserId: id,
+    });
+    console.log(createPokemon);
+    if (!createPokemon) {
+      throw { name: "Invalid Request" };
+    } else {
+      res.status(201).json(createPokemon);
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
+const allPocket = async (req, res, next) => {
+  try {
+    const UserId = req.user.id;
+    let pokemons = await UserPokemon.findAll({
+      where: { UserId },
+    });
+    if (!pokemons) {
+      throw { name: "Pokemon Not Found" };
+    }
+    res.status(200).json(pokemons);
+  } catch (err) {
+    // console.log(err);
+    next(err);
+  }
+};
+
 module.exports = {
   pokemonDetail,
   allPokemon,
+  userPokemon,
+  allPocket,
 };
