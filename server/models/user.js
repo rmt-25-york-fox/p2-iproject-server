@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.DigimonUser, {
         foreignKey: "UserId",
       });
+      User.hasMany(models.Access_Token, {
+        foreignKey: "UserId",
+      });
     }
   }
   User.init(

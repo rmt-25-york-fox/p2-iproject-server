@@ -6,7 +6,7 @@ const errorHandler = (err, req, res, next) => {
       break;
     case "SequelizeUniqueConstraintError":
       res.status(400).json({
-        message: "Email sudah dpakai, silahkan gunakan email lainnya",
+        message: "Email sudah dipakai, silahkan gunakan email lainnya",
       });
       break;
     case "JsonWebTokenError":

@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Access_Token } = require("../models");
 const { verifyPassword } = require("../helpers/bcrypt");
 const { signPayload } = require("../helpers/jwt");
 const axios = require("axios");
@@ -37,7 +37,28 @@ class Controller {
         id: user.id,
         email: user.email,
       });
-      res.status(200).json({ access_token: token });
+      const grant_type = "client_credentials";
+      const scope = "endpoint_client";
+      const client_id = "ydtB4OgQgxnKVkE8HToqZBId9dVlQTeo7I0cwg2N";
+      const client_secret = "pyKJdSr6hR6TAj3OeoE7D3el3qSjsG8SeSCrL3y3";
+
+      const access_token = await axios({
+        method: "post",
+        url: "https://api.globalstats.io/oauth/access_token",
+        data: {
+          grant_type,
+          scope,
+          client_id,
+          client_secret,
+        },
+      });
+
+      const data = await Access_Token.create({
+        UserId: user.id,
+        access_token: access_token.data.access_token,
+      });
+
+      res.status(200).json({ access_token: token, data });
     } catch (err) {
       next(err);
     }
@@ -68,22 +89,6 @@ class Controller {
 
   static async createUserGlobalStats(req, res, next) {
     try {
-      const grant_type = "client_credentials";
-      const scope = "endpoint_client";
-      const client_id = "ydtB4OgQgxnKVkE8HToqZBId9dVlQTeo7I0cwg2N";
-      const client_secret = "pyKJdSr6hR6TAj3OeoE7D3el3qSjsG8SeSCrL3y3";
-
-      const access_token = await axios({
-        method: "post",
-        url: "https://api.globalstats.io/oauth/access_token",
-        data: {
-          grant_type,
-          scope,
-          client_id,
-          client_secret,
-        },
-      });
-
       const { name, score = 0 } = req.body;
       const data = {
         name: name,
@@ -92,16 +97,46 @@ class Controller {
         },
       };
 
+      const access_token = await Access_Token.findAll({
+        limit: 1,
+        order: [["createdAt", "desc"]],
+      });
+
       const createUserStats = await axios.post(
         `https://api.globalstats.io/v1/statistics`,
         data,
         {
           headers: {
-            Authorization: `${access_token.data.token_type} ${access_token.data.access_token}`,
+            Authorization: `Bearer ${access_token[0].access_token}`,
           },
         }
       );
       res.status(201).json(createUserStats.data);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async displayLeaderboard(req, res, next) {
+    try {
+      const data = {
+        limit: 100,
+        additionals: ["score"],
+      };
+
+      const access_token = await Access_Token.findAll({
+        limit: 1,
+        order: [["createdAt", "desc"]],
+      });
+
+      const leaderboard = await axios.post(
+        `https://api.globalstats.io/v1/gtdleaderboard/score`,
+        data,
+        {
+          headers: { Authorization: `Bearer ${access_token[0].access_token}` },
+        }
+      );
+      res.status(200).json(leaderboard.data);
     } catch (err) {
       next(err);
     }
