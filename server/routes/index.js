@@ -17,5 +17,8 @@ router.get("/myorder", ContentController.getMyOrder); //tarik data myOrder
 router.patch("/myorder/:id", ContentController.patchMyOrder); //untuk edit myOrder
 router.get("/myorder/:id", ContentController.getMyOrderById); //tarik data myOrder
 // router.delete("myorder/:id");
+router.get("/shipping/province", ContentController.getProvince);
+router.get("/shipping/city", ContentController.getCity);
+router.post("/shipping/cost", ContentController.getCost);
 
 module.exports = router;
