@@ -9,16 +9,16 @@ class DonationController {
         name,
         email,
         amount,
-        message
+        message,
       });
 
       const transaction = await snap.createTransaction({
         transaction_details: {
-          order_id: newDonation.orderId ,
-          gross_amount: 100000,
+          order_id: newDonation.orderId,
+          gross_amount: newDonation.amount,
         },
       });
-      
+
       let transactionToken = transaction.token;
       let transactionRedirectUrl = transaction.redirect_url;
       res.status(200).json({
@@ -30,40 +30,35 @@ class DonationController {
     }
   }
 
-  static async paymentStatus(req, res, next) {
+  static async updatePaymentStatus(req, res, next) {
     try {
-      const { status_code, order_id } = req.body;
+      const { orderId } = req.body;
+      
       const donation = await Donation.findOne({
         where: {
-          order_id,
+          orderId,
         },
       });
-      if (donation) {
-        donation.paymentStatus = status_code;
-        await donation.save();
+
+      if (!donation) {
+        throw { name: "NotFound" };
       }
+
+      await donation.update(
+        {
+          paymentStatus: "success",
+        },
+        {
+          where: {
+            orderId,
+          },
+        }
+      );
       res.status(200).json({
         message: "Payment status updated",
       });
     } catch (err) {
       next(err);
-    }
-  }
-
-  static async createDonation(req, res, next) {
-    try {
-      const { name, email, amount, message } = req.body;
-      console.log(name, email, amount, message);
-      const newDonation = await Donation.create({
-        name,
-        email,
-        amount,
-        message,
-      });
-
-      res.status(200).json(newDonation);
-    } catch (err) {
-      console.log(err);
     }
   }
 }

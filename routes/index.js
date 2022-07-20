@@ -6,6 +6,6 @@ const errorHandler = require("../middlewares/errorHandler");
 
 router.use("/tutorials", tutorialRoute);
 router.use("/donations", donationRoute);
-// router.use(errorHandler);
+router.use(errorHandler);
 
 module.exports = router;
