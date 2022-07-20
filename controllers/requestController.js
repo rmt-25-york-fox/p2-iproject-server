@@ -78,8 +78,19 @@ class Requests {
     }
     static async myRequest (req,res,next){
         try {
-            const UserId = req.params.UserId
+            const UserId = req.user.id
             const resp = await Request.findAll({where:{UserId},include:[User]})
+            res.status(200).json(
+                resp
+            )
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async myTask (req,res,next){
+        try {
+            const UserId = req.user.id
+            const resp = await Request.findAll({where:{picId:UserId}})
             res.status(200).json(
                 resp
             )

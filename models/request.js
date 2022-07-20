@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     UserId: DataTypes.INTEGER,
     picId: DataTypes.INTEGER,
-    picName:DataTypes.STRING
+    picName:DataTypes.STRING,
+    imgUrl:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Request',
