@@ -42,6 +42,15 @@ class Controller {
       next(err);
     }
   }
+
+  static async getInfo(req, res, next) {
+    try {
+      const data = await SpaceShuttle.findAll();
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;

@@ -6,5 +6,6 @@ const router = express.Router();
 router.post("/register", Controller.register);
 router.post("/login", Controller.login);
 router.use(authentication);
+router.get("/spaceshuttle", Controller.getInfo);
 
 module.exports = router;
