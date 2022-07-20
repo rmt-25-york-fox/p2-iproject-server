@@ -39,8 +39,8 @@ class Controller {
       });
       const grant_type = "client_credentials";
       const scope = "endpoint_client";
-      const client_id = "ydtB4OgQgxnKVkE8HToqZBId9dVlQTeo7I0cwg2N";
-      const client_secret = "pyKJdSr6hR6TAj3OeoE7D3el3qSjsG8SeSCrL3y3";
+      const client_id = process.env.client_id;
+      const client_secret = process.env.client_secret;
 
       const access_token = await axios({
         method: "post",
@@ -94,7 +94,7 @@ class Controller {
   static async createUserGlobalStats(req, res, next) {
     try {
       const { name, score = 0 } = req.body;
-      if (!name) next({name: 'NameRequired'})
+      if (!name) next({ name: "NameRequired" });
       const data = {
         name: name,
         values: {
@@ -174,10 +174,10 @@ class Controller {
           UserId: id,
         },
         include: {
-           model: Digimon
-        }
+          model: Digimon,
+        },
       });
-      res.status(200).json(response)
+      res.status(200).json(response);
     } catch (err) {
       next(err);
     }
