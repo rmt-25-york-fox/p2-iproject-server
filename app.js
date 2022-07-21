@@ -71,7 +71,7 @@ app.get('/all', async(req,res)=>{
 app.get('/status/:id', async(req,res)=>{
   try {
     const {id} = req.params
-    const status = await Post.findOne({where:{id}, include:[{
+    const status = await Post.findOne({where:{id}, include:[User, {
       model: Comment,
       include: [User]
     }]})
