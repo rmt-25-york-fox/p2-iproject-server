@@ -11,6 +11,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use('/', router)
 app.use(errorHandler)
+
 app.listen(port,()=>{
     console.log(`Pick port ${port} and run`)
 })
