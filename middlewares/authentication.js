@@ -4,19 +4,21 @@ const { User } = require("../models");
 const authentication = async (req, res, next) => {
   try {
     const { access_token } = req.headers;
-    console.log(access_token);
+    console.log("access_token >>>", access_token);
     const decoded = verifyToken(access_token);
 
-    console.log(decoded);
+    console.log("decoded >>>", decoded);
+
+    console.log("decoded email >>>", decoded.email);
 
     const user = await User.findOne({ where: { email: decoded.email } });
 
-    console.log(user);
+    console.log("user>>>", user);
 
     if (!user) {
       next({ name: "Unauthorized" });
     } else {
-      console.log("ELSE");
+      console.log("ELSE AUTHENTICATION SUCCESS USER & REQ USER");
       req.user = {
         id: user.id,
         email: user.email,

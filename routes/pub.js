@@ -30,15 +30,18 @@ router.get(
   SportController.customerGetSport
 );
 
+router.put(
+  "/updateFitness",
+
+  SportController.updateFitness
+);
+
+router.get("/histories", historyController.getHistories);
+
 router.post(
   "/favorites/:movieId",
   authenticationCustomer,
   SportController.customerCreateTodo
-);
-router.get(
-  "/favorites",
-  authenticationCustomer,
-  SportController.customerGetTodo
 );
 
 module.exports = router;
