@@ -7,13 +7,11 @@ const { User, SpaceShuttle } = require("../models");
 class Controller {
   static async register(req, res, next) {
     try {
-      const { username, email, password, phoneNumber, address } = req.body;
+      const { username, email, password } = req.body;
       const newUser = await User.create({
         username,
         email,
         password,
-        phoneNumber,
-        address,
       });
       res.status(201).json({
         statusCode: 201,
@@ -100,7 +98,6 @@ class Controller {
       const data = await SpaceShuttle.findByPk(id);
       const msg = `SpaceShuttle with id ${data.id} updated`;
       res.status(200).json({
-        statusCode: 200,
         message: msg,
         data: data,
       });

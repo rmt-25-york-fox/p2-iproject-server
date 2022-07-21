@@ -5,7 +5,7 @@
 //   service: "hotmail",
 //   auth: {
 //     user: "space_h8@outlook.com",
-//     pass: "Khalifa420",
+//     pass: "",
 //   },
 // });
 
