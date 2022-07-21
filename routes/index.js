@@ -1,7 +1,7 @@
 let express = require("express");
 let router = express.Router();
 const userController = require("../controllers/userController");
-let productsRoutes = require("./products.js");
+let pokemonRoutes = require("./pokemons.js");
 const { authentication } = require("../middlewares/authentication.js");
 const errorHandler = require("../middlewares/errorHandler");
 
@@ -13,6 +13,6 @@ router.post("/userBoard", userController.tokenLeaderboard);
 router.post("/leaderboards", userController.getLeaderBoard);
 
 router.use(authentication);
-router.use(productsRoutes);
+router.use(pokemonRoutes);
 
 module.exports = router;
