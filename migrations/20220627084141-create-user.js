@@ -58,6 +58,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      isSubscribe: {
+        defaultValue: "No",
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

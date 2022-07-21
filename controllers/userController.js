@@ -4,6 +4,28 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 
 class userController {
+  static async changeIsSubscribe(req, res, next) {
+    try {
+      const { email } = req.body;
+      if (!email) {
+        throw { name: "InvalidUser" };
+      }
+
+      const updatedUser = await User.update(
+        { isSubscribe: "Subscribed" },
+        { where: { email: email } }
+      );
+
+      if (!updatedUser) {
+        throw { name: "InvalidUser" };
+      }
+
+      res.status(200).json(updatedUser);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async register(req, res, next) {
     try {
       const { email, password } = req.body;
@@ -102,7 +124,7 @@ class userController {
         res.status(200).json({
           access_token,
           name: user.name,
-          role: user.role,
+          email: user.email,
         });
       }
     } catch (err) {
@@ -144,7 +166,7 @@ class userController {
         res.status(200).json({
           access_token,
           name: user.name,
-          role: user.role,
+          email: user.email,
         });
       }
     } catch (err) {
