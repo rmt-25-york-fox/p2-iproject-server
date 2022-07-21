@@ -1,7 +1,7 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 function hash(pwd) {
-  return bcrypt.hashSync(pwd);
+  return bcrypt.hashSync(pwd, 10);
 }
 
 function compare(pwd, hashPwd) {
