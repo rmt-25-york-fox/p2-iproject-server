@@ -61,7 +61,10 @@ app.get('/all', async(req,res)=>{
      data: allStatus
    })
   } catch (error) {
-    console.log(error)
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error'
+   })
   }
 })
 
@@ -106,7 +109,10 @@ app.post('/login', async (req,res,next) => {
            username: user.username
          })
         }catch(err){
-          console.log(err)
+          res.status(500).json({
+            statusCode: 500,
+            message: 'Internal Server Error'
+         })
 
         }
       }
@@ -135,7 +141,10 @@ app.use(async (req, res, next) => {
     next()
   }catch(err){
   console.log(err)
-    next(err)
+  res.status(500).json({
+    statusCode: 500,
+    message: 'Internal Server Error'
+ })
   }
 })
 
@@ -183,7 +192,10 @@ app.post('/newStatus', async (req,res,next)=>{
    })
 
   } catch (error) {
-    console.log(error)
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error'
+   })
   }
 })
 
