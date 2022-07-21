@@ -16,6 +16,54 @@ const getPagingData = (data, page, limit) => {
 };
 
 class SportController {
+  static async updateFitness(req, res, next) {
+    try {
+      console.log("updateFitness");
+      const id = req.user.id;
+      console.log("id>>", id);
+      const { height, weight, neck, waist, hip, goal, activitylevel } =
+        req.body;
+
+      console.log("req Body>>>>", req.body);
+
+      const updatedUser = await User.update(
+        {
+          height: height,
+          weight: weight,
+          neck: neck,
+          waist: waist,
+          hip: hip,
+          goal: goal,
+          activitylevel: activitylevel,
+        },
+        { where: { id: id } }
+      );
+
+      console.log("updatedUser>>>>", updatedUser);
+
+      if (updatedUser <= 0) {
+        next({ name: "InvalidUser" });
+      } else {
+        const createHistory = await History.create({
+          UserId: id,
+          height: height,
+          weight: weight,
+          neck: neck,
+          waist: waist,
+          hip: hip,
+          goal: goal,
+          activitylevel: activitylevel,
+        });
+
+        res.status(200).json({
+          message: `Your data fitness success to update`,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
   static async createSport(req, res, next) {
     try {
       const { id } = req.user;
@@ -131,6 +179,104 @@ class SportController {
       }
     } catch (err) {
       console.log(err);
+      next(err);
+    }
+  }
+
+  static async customerGetFitness(req, res, next) {
+    try {
+      console.log("GET Fitness");
+      console.log(req.user);
+      const id = req.user.id; //id user bukan id Sport
+
+      let findUser = await User.findByPk(id);
+
+      console.log("findUser>>>", findUser);
+
+      if (!findUser) throw { name: "InvalidUser" };
+
+      let data = {};
+
+      const options = {
+        method: "GET",
+        url: "https://fitness-calculator.p.rapidapi.com/bmi",
+        params: {
+          age: findUser.age,
+          weight: findUser.weight,
+          height: findUser.height,
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "e271177b1dmsh75da436e4a78356p10452ejsnd733e94bc616",
+          "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com",
+        },
+      };
+
+      await axios
+        .request(options)
+        .then(function (response) {
+          console.log("response>>>", response);
+          data.bmi = response.data;
+        })
+        .catch(function (error) {
+          console.error("error>>>", error);
+        });
+
+      const options2 = {
+        method: "GET",
+        url: "https://fitness-calculator.p.rapidapi.com/idealweight",
+        params: { gender: findUser.gender, height: findUser.height },
+        headers: {
+          "X-RapidAPI-Key":
+            "e271177b1dmsh75da436e4a78356p10452ejsnd733e94bc616",
+          "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com",
+        },
+      };
+
+      await axios
+        .request(options2)
+        .then(function (response) {
+          // console.log(response.data);
+          data.idealWeight = response.data.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      const options3 = {
+        method: "GET",
+        url: "https://fitness-calculator.p.rapidapi.com/bodyfat",
+        params: {
+          age: findUser.age,
+          gender: findUser.gender,
+          weight: findUser.weight,
+          height: findUser.height,
+          neck: findUser.neck,
+          waist: findUser.waist,
+          hip: findUser.hip,
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "e271177b1dmsh75da436e4a78356p10452ejsnd733e94bc616",
+          "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com",
+        },
+      };
+
+      await axios
+        .request(options3)
+        .then(function (response) {
+          // console.log(response.data);
+          data.bodyFatPercentage = response.data.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      console.log("data>>>>", data);
+
+      res.status(200).json({ data: data });
+    } catch (err) {
+      console.log("err>>>>>", err);
       next(err);
     }
   }

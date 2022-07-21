@@ -8,35 +8,40 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      SportId: {
+      UserId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         foreignKey: true,
-        references: {
-          model: "Sports",
-          key: "id",
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE",
-        },
+        references: { model: "Users", key: "id" },
       },
-      title: {
+
+      height: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      weight: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      neck: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      waist: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      hip: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      activitylevel: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      goal: {
+        allowNull: false,
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      updatedBy: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        foreignKey: true,
-        references: {
-          model: "Users",
-          key: "id",
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE",
-        },
       },
       createdAt: {
         allowNull: false,

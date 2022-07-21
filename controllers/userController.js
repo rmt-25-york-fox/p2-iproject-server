@@ -23,7 +23,20 @@ class userController {
 
   static async customerRegister(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const {
+        name,
+        email,
+        password,
+        age,
+        gender,
+        weight,
+        height,
+        neck,
+        waist,
+        hip,
+        activitylevel,
+        goal,
+      } = req.body;
       console.log(email);
       if (email === undefined || email === null) {
         throw { name: "EmailRequired" };
@@ -31,10 +44,25 @@ class userController {
       if (!password) {
         next({ name: "PasswordRequired" });
       }
-      const role = "Customer";
-      const user = await User.create({ email, password, role });
+
+      const user = await User.create({
+        name,
+        email,
+        password,
+        age,
+        gender,
+        weight,
+        height,
+        neck,
+        waist,
+        hip,
+        activitylevel,
+        goal,
+      });
+      console.log(user);
       res.status(201).json({ id: user.id, email: user.email });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
@@ -85,7 +113,7 @@ class userController {
   static async customerLogin(req, res, next) {
     try {
       const { email, password } = req.body;
-
+      console.log(email, password);
       if (!email) {
         next({ name: "EmailRequired" });
       }
@@ -95,33 +123,29 @@ class userController {
       }
 
       const user = await User.findOne({ where: { email: email } });
-
+      console.log(user);
       if (user === null) {
         console.log("user null");
 
         throw { name: "Unauthorized" };
       } else if (!user) {
+        console.log("user negation");
         next({ name: "Unauthorized" });
       } else if (!comparePassword(password, user.password)) {
+        console.log("compare password failed..");
         next({ name: "Unauthorized" });
       } else {
-        if (user.role === "Admin" || user.role === "Staff") {
-          next({ name: "RegisteredAsAdminOrStaff" });
-        } else if (user.role !== "Customer") {
-          next({ name: "Unauthorized" });
-        } else {
-          console.log(user.dataValues, "<<<<<<<<<<<user userController login");
-          const access_token = signToken({
-            id: user.id,
-            email: user.email,
-          });
+        console.log(user.dataValues, "<<<<<<<<<<<user userController login");
+        const access_token = signToken({
+          id: user.id,
+          email: user.email,
+        });
 
-          res.status(200).json({
-            access_token,
-            name: user.name,
-            role: user.role,
-          });
-        }
+        res.status(200).json({
+          access_token,
+          name: user.name,
+          role: user.role,
+        });
       }
     } catch (err) {
       next(err);
@@ -147,7 +171,7 @@ class userController {
           email: payload.email,
         },
         defaults: {
-          username: payload.name,
+          name: payload.name,
           email: payload.email,
           password: "google_password",
           role: "Staff",
@@ -192,7 +216,7 @@ class userController {
           email: payload.email,
         },
         defaults: {
-          username: payload.name,
+          name: payload.name,
           email: payload.email,
           password: "google_password",
           role: "Customer",
