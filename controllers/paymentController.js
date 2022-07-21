@@ -18,7 +18,7 @@ class PaymentController {
       const transaction = await snap.createTransaction({
         transaction_details: {
           order_id: newPayment.OrderId,
-          gross_amount: 1000,
+          gross_amount: newPayment.amount,
         },
       });
 

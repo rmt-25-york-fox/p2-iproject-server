@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: "Amount is required" },
         },
       },
-      message: DataTypes.STRING,
       OrderId: DataTypes.STRING,
       paymentStatus: DataTypes.STRING,
     },
@@ -46,12 +45,8 @@ module.exports = (sequelize, DataTypes) => {
             instance.name = "User";
           }
 
-          if (!instance.message) {
-            instance.message = "Payment";
-          }
-
           instance.OrderId = new Date().getTime();
-          instance.paymentStatus = "pending";
+          instance.paymentStatus = "Pending";
         },
       },
     }

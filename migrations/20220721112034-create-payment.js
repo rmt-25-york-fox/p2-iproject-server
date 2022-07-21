@@ -17,9 +17,6 @@ module.exports = {
       amount: {
         type: Sequelize.INTEGER,
       },
-      message: {
-        type: Sequelize.STRING,
-      },
       OrderId: {
         type: Sequelize.STRING,
       },
