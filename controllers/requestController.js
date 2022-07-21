@@ -159,6 +159,7 @@ class Requests {
             if(!checkRequest) throw ({name:'Request Not Found'})
             if(UserId !== checkRequest.UserId) throw ({name:'Request Forbidden'})
             if(checkRequest.status === 'Done') throw ({name:`Can't delete finished request`})
+            const updatePoint = await User.increment({points:checkRequest.points},{where:{id:checkRequest.UserId}})
             const resp = await Request.destroy({where:{id}})
             res.status(200).json(
                 'Success Delete Request'
