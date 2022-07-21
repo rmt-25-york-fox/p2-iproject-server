@@ -120,3 +120,21 @@ response(404).json({message: "Not found product"})
 --- fail2 ---
 response(500).json({message: "ISE"})
 ```
+
+app.post("/getOtp", Controller.getOtp);
+
+```
+{
+    email: "your email"
+}
+```
+
+```
+--- success ---
+response(201).json({Email send successfully})
+
+
+--- fail ---
+response(404).json({message error})
+
+```

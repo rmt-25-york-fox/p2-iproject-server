@@ -105,7 +105,7 @@ class Controller {
 
     mailTransporter.sendMail(mailDetails, function (err, data) {
       if (err) {
-        res.status(err).json(err);
+        res.status(404).json(err);
         console.log("Error Occurs");
       } else {
         res.status(201).json(otp);
