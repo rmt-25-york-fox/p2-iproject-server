@@ -1,5 +1,7 @@
 const snap = require("../helpers/midtrans");
 const { Donation } = require("../models");
+const nodemailer = require("nodemailer");
+const emailTemplate = require("../helpers/emailTemplate");
 
 class DonationController {
   static async getDonations(req, res, next) {
@@ -73,6 +75,34 @@ class DonationController {
           },
         }
       );
+
+      // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: "uriel.lubowitz8@ethereal.email", // ethereal user
+          pass: "DTd8AhjXEyUGngVbdH", // ethereal password
+        },
+      });
+
+      const msg = {
+        from: '"BackMiUp" <admin@backmiup.com>', // sender address
+        to: `${donation.email}`, // list of receivers
+        subject: "Thank you for your support!", // Subject line
+        html: emailTemplate(donation.name), // html body
+      };
+      // send mail with defined transport object
+      const info = await transporter.sendMail(msg);
+
+      console.log("Message sent: %s", info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+
       res.status(200).json({
         message: "Payment status updated",
       });
