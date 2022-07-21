@@ -151,6 +151,23 @@ class Requests {
             next(err)
         }
     }
+    static async deleteRequest(req,res,next){
+        try {
+            const id = req.params.id 
+            const UserId = req.user.id
+            const checkRequest = await Request.findOne({where:{id}})
+            if(!checkRequest) throw ({name:'Request Not Found'})
+            if(UserId !== checkRequest.UserId) throw ({name:'Request Forbidden'})
+            if(checkRequest.status === 'Done') throw ({name:`Can't delete finished request`})
+            const resp = await Request.destroy({where:{id}})
+            res.status(200).json(
+                'Success Delete Request'
+            )
+        } catch (err) {
+            console.log(err);
+            next(err)
+        }
+    }
 }
 
 module.exports = Requests
