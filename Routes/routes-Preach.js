@@ -9,6 +9,8 @@ router.use(authentication)
 router.post('/add', authorization,PreachCon.addPreach)
 router.get('/mypreaches', authorization,PreachCon.personalPreachList)
 router.get('/mypreaches/:id', authorization,PreachCon.getUpdatePreach)
+router.patch('/mypreaches/:id', authorization,PreachCon.patchUpdatePreach)
+
 
 
 
