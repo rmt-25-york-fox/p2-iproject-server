@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
-
+-
 router.post('/register', userController.register);
 router.post('/login', userController.login);
 router.use(authentication);
