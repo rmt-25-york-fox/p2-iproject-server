@@ -102,5 +102,24 @@ class Controller{
             next(err)
         }
     }
+
+    static async preachById(req , res, next){
+        try {
+            const {id} = req.params
+            const preach = await Preach.findOne({
+                include: {
+                    model: Pastor
+                }
+                ,
+                where:{
+                     id: +id
+                    }
+            })
+
+            res.status(200).json(preach)
+        } catch (err) {
+            
+        }
+    }
 }
 module.exports = Controller

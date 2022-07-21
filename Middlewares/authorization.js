@@ -1,6 +1,6 @@
 const { Movie, User, Genre }= require('../models')
 
-let authorization = async(req ,res , next)=>{
+let authorizationPastor = async(req ,res , next)=>{
     try {
 
         if(req.user.role !== "pastor"){
@@ -14,5 +14,19 @@ let authorization = async(req ,res , next)=>{
     }
 } 
 
+let authorizationMember = async(req ,res , next)=>{
+    try {
 
-module.exports = authorization
+        if(req.user.role !== "member"){
+           throw ({message: "Unauthorized Access"})
+        }else{
+            next()
+        }
+        
+    } catch (err) {
+        next(err)
+    }
+} 
+
+
+module.exports = {authorizationPastor , authorizationMember}
