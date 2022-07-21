@@ -37,6 +37,8 @@ const data = [
 ];
 
 function calculator(data) {
+  let tambah = 0;
+  let totalTambah = [];
   let temp = [];
   let month = [];
   let price = [];
@@ -52,14 +54,28 @@ function calculator(data) {
 
     if (monthNum === 6) {
       month.push("Jun");
+      tambah += el.TotalHarga;
+      totalTambah.push(tambah);
+      tambah = 0;
     } else if (monthNum === 7) {
       month.push("Jul");
+      tambah += el.TotalHarga;
+      totalTambah.push(tambah);
+      tambah = 0;
     } else if (monthNum === 9) {
       month.push("Sep");
+      tambah += el.TotalHarga;
+      totalTambah.push(tambah);
+      tambah = 0;
     }
 
     price.push(el.TotalHarga);
   }
+
+  const sumWithInitial = totalTambah.reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    0
+  );
 
   temp.push(month);
   temp.push(price);
@@ -92,7 +108,7 @@ function calculator(data) {
   const groupByCategory = arrObj.reduce((group, x) => {
     const { month } = x;
     group[month] = group[month] ?? [];
-    group[month].push(x);
+    group[month].push(x.totalSales);
     return group;
   }, {});
 
@@ -100,3 +116,17 @@ function calculator(data) {
 }
 
 console.log(calculator(data));
+
+// {
+//   "Jul": [
+//     15000,
+//     128000,
+//     112000,
+//     100000,
+//     120000,
+//     1560000
+//   ],
+//   "Jun": [
+//     90000
+//   ]
+// }
