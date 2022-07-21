@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "postgres",
-    "password": "123456",
-    "database": "iProjectServer",
+    "password": "|1nx|0rD",
+    "database": "Pray",
     "host": "localhost",
     "dialect": "postgres"
   },
