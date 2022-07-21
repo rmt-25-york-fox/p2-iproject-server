@@ -14,6 +14,7 @@ class Users {
             email:resp.email
         })
         } catch (err) {
+            console.log(err);
             next(err)            
         }
     }
