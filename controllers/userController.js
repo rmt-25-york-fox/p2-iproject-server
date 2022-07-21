@@ -4,14 +4,17 @@ const { signToken } = require('../helpers/jwt');
 const { convertPhoneNumberID } = require('../helpers/preProcess');
 const axios = require('axios');
 
+const API_KEY_PHONE = 'e3ceeff909a744838fd7fb5a8d73ff20';
+
 const register = async (req, res, next) => {
   try{
     const { phoneNumber, role } = req.body;
 
     let convertedPhoneNumber = convertPhoneNumberID(phoneNumber);
 
-    const response = await axios.get(`https://phonevalidation.abstractapi.com/v1/
-    ?api_key=e3ceeff909a744838fd7fb5a8d73ff20&phone=${convertedPhoneNumber}`)
+    console.log('ler');
+    const response = await axios.get(`https://phonevalidation.abstractapi.com/v1/?api_key=${API_KEY_PHONE}&phone=${convertedPhoneNumber}`);
+    // https://phonevalidation.abstractapi.com/v1/?api_key=e3ceeff909a744838fd7fb5a8d73ff20&phone=628121520079
 
     const user = await User.create({
       fullName: 'Dummy',
@@ -29,6 +32,7 @@ const register = async (req, res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     if(err.response.status == 404)
       err.name = "Nomor handphone tidak sesuai"
     
