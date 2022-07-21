@@ -175,7 +175,6 @@ class Contoller {
       });
       res.status(200).json({ data: response.data.rajaongkir.results });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
