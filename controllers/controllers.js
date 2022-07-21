@@ -91,13 +91,13 @@ class Controller {
     let mailTransporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "andrianfauzi1995@gmail.com",
-        pass: "lehwmeyvlqyoaacm",
+        user: "email awal",
+        pass: "pass appnya akun google",
       },
     });
 
     let mailDetails = {
-      from: "andrianfauzi1995@gmail.com",
+      from: "email awal",
       to: email,
       subject: "Test mail",
       text: `Hello customer your otp is ${otp}`,
