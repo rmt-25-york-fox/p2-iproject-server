@@ -23,7 +23,7 @@ const errorHandler = (err, req, res, next) => {
     case "SequelizeValidationError":
       res.status(400).json({ message: err.errors.map((el) => el.message) });
       break;
-    case "Product Not Found":
+    case "Pokemon Not Found":
       res.status(404).json({ message: "Product Not Found" });
       break;
     case "Forbidden":
