@@ -1,0 +1,26 @@
+[
+  {
+    "username": "satrio",
+    "email": "satriohutomo178@gmail.com",
+    "password": "12345",
+    "subscribe": true
+  },
+  {
+    "username": "heru",
+    "email": "heru@gmail.com",
+    "password": "12345",
+    "subscribe": false
+  },
+  {
+    "username": "tuki",
+    "email": "tuki@gmail.com",
+    "password": "12345",
+    "subscribe": false
+  },
+  {
+    "username": "bambang",
+    "email": "bambang@gmail.com",
+    "password": "12345",
+    "subscribe": false
+  }
+]
