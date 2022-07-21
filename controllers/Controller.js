@@ -73,7 +73,7 @@ class Contoller {
       const userId = req.user.id;
       const userOrder = await UserOrder.findAll({
         where: { UserId: userId },
-        include: [{ model: Product }],
+        include: [{ model: Product, include: [{ model: Category }] }],
       });
       let totalOrder = 0;
       userOrder.forEach((el) => {
