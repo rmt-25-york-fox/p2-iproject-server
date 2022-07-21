@@ -1,0 +1,10 @@
+[
+  {
+    "UserId": 1,
+    "VgaId": 1,
+    "PsuId": 2,
+    "ProcessorId": 3,
+    "SsdId": 4,
+    "RamId": 5
+  }
+]

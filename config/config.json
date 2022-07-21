@@ -1,0 +1,28 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "p2-iproject-rakitin-development",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "dp2-iproject-rakitin-test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "ssl": true,
+    "dialect": "postgres",
+    "protocol": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}

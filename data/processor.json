@@ -1,0 +1,32 @@
+[
+  {
+    "name": "AMD RYZEN 7 5700X | Processor AMD AM4 Zen 3 Vermeer 8 Core 16 Threads",
+    "price": 4900000,
+    "power": 49,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/4/22/971affed-e891-4a64-86ed-bf824e88b6a5.jpg"
+  },
+  {
+    "name": "INTEL CORE I9 12900KS | Desktop Processor 16 (8P+8E) Cores LGA 1700",
+    "price": 12800000,
+    "power": 92,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/4/6/910a58c0-7dcd-4e2c-9461-f416d36ecbb1.jpg"
+  },
+  {
+    "name": "INTEL CORE I9 12900F | Desktop Processor 16 (8P+8E) Cores LGA 1700",
+    "price": 7900000,
+    "power": 79,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/3/11/ffa8d1a0-6155-495e-907a-731ccf90f99d.jpg"
+  },
+  {
+    "name": "INTEL CORE I7 12700F | Desktop Processor 12 (8P+4E) Cores LGA 1700",
+    "price": 5000000,
+    "power": 50,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/1/5/634287d9-a0c4-4ad8-854d-fc13ba09e4bf.jpg"
+  },
+  {
+    "name": "AMD RYZEN 7 5700G | Processor AMD AM4 Zen 3 Cezanne 8 Cores 16 Threads",
+    "price": 4900000,
+    "power": 49,
+    "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2021/8/9/b05dd118-42c9-4346-80dc-d57a1b0d3e3d.jpg"
+  }
+]
