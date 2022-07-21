@@ -55,8 +55,8 @@ async function main() {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "satriohutomo178@gmail.com",
-      pass: "khalifa0420", // naturally, replace both with your real credentials or an application-specific password
+      user: "",
+      pass: "", // naturally, replace both with your real credentials or an application-specific password
     },
   });
 
