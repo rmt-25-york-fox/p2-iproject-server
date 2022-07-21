@@ -12,13 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Post.belongsTo(models.User);
+      Post.hasMany(models.Transaction);
     }
   }
   Post.init({
     name: DataTypes.STRING,
     UserId: DataTypes.INTEGER,
+    address: DataTypes.INTEGER,
     latitude: DataTypes.STRING,
-    longitude: DataTypes.STRING
+    longitude: DataTypes.STRING,
+    status: DataTypes.STRING,
+    idUrl: DataTypes.STRING,
+    price: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',
