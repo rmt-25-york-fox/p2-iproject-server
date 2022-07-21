@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer')
 var jwt = require('jsonwebtoken');
 
 const axios = require('axios')
-const { User, Post } = require('./models')
+const { User, Post, Comment } = require('./models')
 const multer = require('multer')
 
 const app = express()
@@ -61,6 +61,27 @@ app.get('/all', async(req,res)=>{
      data: allStatus
    })
   } catch (error) {
+    res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error'
+   })
+  }
+})
+
+app.get('/status/:id', async(req,res)=>{
+  try {
+    const {id} = req.params
+    const status = await Post.findOne({where:{id}, include:[{
+      model: Comment,
+      include: [User]
+    }]})
+
+    res.status(200).json({
+      statusCode: 200,
+      message: status
+    })
+  } catch (error) {
+    console.log(error)
     res.status(500).json({
       statusCode: 500,
       message: 'Internal Server Error'
@@ -142,6 +163,27 @@ app.use(async (req, res, next) => {
   }catch(err){
   console.log(err)
   res.status(500).json({
+    statusCode: 500,
+    message: 'Internal Server Error'
+ })
+  }
+})
+
+app.post('/newComment', async(req,res)=>{
+  try {
+    const { postId, content } = req.body
+    const userId = req.user.id
+
+    const newComment = await Comment.create({
+      content,
+      UserId: userId,
+      PostId: postId
+    })
+
+    console.log(userId, postId, content, "<<<commment")
+  } catch (error) {
+    console.log(err)
+    res.status(500).json({
     statusCode: 500,
     message: 'Internal Server Error'
  })
