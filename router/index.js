@@ -12,5 +12,7 @@ router.use(authentication);
 router.post("/order/:productId", Controller.addUserOrder);
 router.get("/order", Controller.getUserOrder);
 router.get("/payment", Controller.payment);
+router.get("/paymentstatus", Controller.checkPaymentStatus);
+router.patch("/paymentstatus", Controller.handleStatusPayment);
 
 module.exports = router;

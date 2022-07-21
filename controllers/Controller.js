@@ -180,6 +180,16 @@ class Contoller {
     }
   }
 
+  static async checkPaymentStatus(req, res, next) {
+    try {
+      const { id } = req.user;
+      const status = await Order.findOne({ where: { UserId: id } });
+      res.status(200).json({ status });
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async handleStatusPayment(req, res, next) {
     try {
       const { id } = req.user;
