@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     picId: DataTypes.INTEGER,
     picName:DataTypes.STRING,
-    imgUrl:DataTypes.STRING
+    location:DataTypes.STRING,
+    timezone:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Request',

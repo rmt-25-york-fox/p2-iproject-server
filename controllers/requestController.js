@@ -1,29 +1,49 @@
 const { Request,User } = require('../models')
+const {Op} = require('sequelize')
+const axios = require("axios");
 
 class Requests {
     static async addRequest (req,res,next){
-        try {
+        try { 
             const UserId = req.user.id
             const status = 'New'
             const { title,description,points } = req.body
             const checkPoint = await User.findOne({where:{id:UserId}})
             if(checkPoint.points < points) throw {name:'Insufficient points'}
             const decrease = await User.decrement({points:points},{where:{id:UserId}})
-            const resp = await Request.create({title,description,points,status,UserId})
-            res.status(201).json(
-                resp
-            )
+            const GetLocation = require('location-by-ip');
+            const SPOTT_API_KEY = '4add49e12cmsh77b2507efa94f0ep1655eajsnce8669274ed4';
+            let logasi = ''
+            let timezone = ''
+            const getLocation = new GetLocation(SPOTT_API_KEY)
+            getLocation.byMyIp()
+            .then(data=>{
+                console.log(data);
+                logasi = data.name
+                timezone = data.timezoneId
+                const resp = Request.create({title,description,points,status,UserId,location:logasi,timezone})
+                res.status(201).json(
+                    resp
+                )
+            })
+            .catch(err=>{
+                next(err)
+            })
+            
+            
         } catch (err) {
+            console.log(err);
             next(err)
         }
     }
     static async getRequest (req,res,next){
         try {
-            const resp = await Request.findAll({include:[User]})
+            const resp = await Request.findAll({where:{[Op.not]:[{status:'Done'}]},include:[User]})
             res.status(200).json(
                 resp
             )
         } catch (err) {
+            console.log(err);
             next(err)
         }
     }
@@ -106,6 +126,28 @@ class Requests {
                 resp
             )
         } catch (err) {
+            next(err)
+        }
+    }
+    static async TTS (req,res,next){
+        try {
+            const id = req.params.id
+            const ini = await Request.findOne({where:{id}})
+            const isi = ini.description
+            const response = await axios({
+                method: "POST",
+                url: `https://simple-tts-text-to-speech.p.rapidapi.com/tts`,
+                headers: {
+                    'content-type': 'application/json',
+                    'X-RapidAPI-Key': '8255cb8690msh49bb7bd03bb98e8p11b0b5jsnfc4e654d1ba6',
+                    'X-RapidAPI-Host': 'simple-tts-text-to-speech.p.rapidapi.com'
+                },
+                data:`{"text":"${isi}","voice":"jv_ID/google-gmu_low"}`
+            })
+            console.log(response);
+            res.status(200).json({ response:response.data });
+        } catch (err) {
+            console.log(err);
             next(err)
         }
     }
