@@ -1,6 +1,7 @@
 const { Petrol, Transaksi, User } = require("../models");
 const { bcryptCompare, bcryptHash } = require("../helpers/bcrypt");
 const { signJwt, verifyJwt } = require("../helpers/jwt");
+const { calculator } = require("../helpers/data");
 const { OAuth2Client } = require("google-auth-library");
 const { CLIENT_ID } = process.env;
 
@@ -65,7 +66,7 @@ class Controller {
       res.status(200).json({
         statuscode: 200,
         data: {
-          accesstoken: token,
+          access_token: token,
           userId: user.id,
           email: user.email,
         },
@@ -103,7 +104,7 @@ class Controller {
       res.status(200).json({
         statuscode: 200,
         data: {
-          accesstoken: token,
+          access_token: token,
           userId: user.id,
           userId: created.id,
           email: user.email,
@@ -118,14 +119,7 @@ class Controller {
     try {
       const petrol = await Petrol.findAll();
 
-      console.log(petrol, "<<ini poetrol");
-
-      res.status(200).json({
-        statuscode: 200,
-        data: {
-          petrol,
-        },
-      });
+      res.status(200).json(petrol);
     } catch (err) {
       next(err);
     }
@@ -144,12 +138,33 @@ class Controller {
       });
 
       res.status(200).json({
-        statuscode: 200,
-        data: {
-          myTransaksi,
-        },
+        myTransaksi,
       });
     } catch (err) {
+      next(err);
+    }
+  }
+
+  //filter intinya apa yang kita mau
+  static async chart(req, res, next) {
+    try {
+      const { id } = req.user;
+      const data = await Transaksi.findAll({
+        where: {
+          UserId: id,
+        },
+      });
+
+      let arr = [];
+      data.forEach((el) => {
+        arr.push(el.dataValues);
+      });
+      console.log(arr);
+      const result = calculator(arr);
+
+      res.status(200).json(result);
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   }
@@ -157,17 +172,17 @@ class Controller {
   static async postTranskasi(req, res, next) {
     try {
       const { id } = req.user;
-      const { liter } = req.body;
+      const { liter, userId } = req.body;
       const { petrolId } = req.params;
       console.log(id, liter, petrolId, "<<");
       const gas = await Petrol.findByPk(petrolId);
-
+      console.log(liter, userId);
       if (!gas) {
         throw { name: "Data Not Found" };
       }
 
       let input = {
-        UserId: id,
+        UserId: userId,
         PetrolId: petrolId,
         TotalHarga: Math.round(liter * gas.harga),
       };
@@ -185,4 +200,5 @@ class Controller {
     }
   }
 }
+
 module.exports = Controller;

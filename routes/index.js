@@ -14,6 +14,8 @@ router.get("/petrol", Controller.getPetrol);
 
 router.get("/transaksi", Controller.getTransaksi);
 
+router.get("/chart", Controller.chart);
+
 router.post("/transaksi/:petrolId", Controller.postTranskasi);
 
 router.use(errorHandler);
