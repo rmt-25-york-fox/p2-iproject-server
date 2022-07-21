@@ -33,10 +33,14 @@ const register = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    if(err.response.status == 404)
+    if(!err.response.status){
+      next(err);
+    }
+    else if(err.response.status == 404){
       err.name = "Nomor handphone tidak sesuai"
+      next(err);
+    }
     
-    next(err);
   }
 }
 
