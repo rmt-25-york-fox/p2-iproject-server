@@ -1,6 +1,9 @@
 const { Petrol, Transaksi, User } = require("../models");
 const { bcryptCompare, bcryptHash } = require("../helpers/bcrypt");
 const { signJwt, verifyJwt } = require("../helpers/jwt");
+const { calculator } = require("../helpers/data");
+const { OAuth2Client } = require("google-auth-library");
+const { CLIENT_ID } = process.env;
 
 class Controller {
   static async register(req, res, next) {
@@ -63,7 +66,7 @@ class Controller {
       res.status(200).json({
         statuscode: 200,
         data: {
-          accesstoken: token,
+          access_token: token,
           userId: user.id,
           email: user.email,
         },
@@ -74,18 +77,49 @@ class Controller {
     }
   }
 
-  static async getPetrol(req, res, next) {
+  static async google(req, res, next) {
     try {
-      const petrol = await Petrol.findAll();
+      const client = new OAuth2Client(CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken: req.headers.credential,
+        audience: CLIENT_ID, //process.env.CLIENT_I
+      });
 
-      console.log(petrol, "<<ini poetrol");
+      const payload = ticket.getPayload();
+      const [user, created] = await Customer.findOrCreate({
+        where: { email: payload.email },
+        defaults: {
+          email: payload.email,
+          password: "CobaTebak",
+          kendaraan: "Mobil",
+        },
+        hooks: false,
+      });
+
+      const idToken = {
+        id: user.id,
+      };
+      const token = signJwt(idToken);
 
       res.status(200).json({
         statuscode: 200,
         data: {
-          petrol,
+          access_token: token,
+          userId: user.id,
+          userId: created.id,
+          email: user.email,
         },
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getPetrol(req, res, next) {
+    try {
+      const petrol = await Petrol.findAll();
+
+      res.status(200).json(petrol);
     } catch (err) {
       next(err);
     }
@@ -94,27 +128,77 @@ class Controller {
   static async getTransaksi(req, res, next) {
     try {
       const { id } = req.user;
-      console.log(id);
       const myTransaksi = await Transaksi.findAll({
         where: {
-          id,
+          UserId: id,
         },
         include: {
           model: Petrol,
         },
       });
-      console.log(myTransaksi, "<<<");
 
       res.status(200).json({
-        statuscode: 200,
-        data: {
-          myTransaksi,
+        myTransaksi,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  //filter intinya apa yang kita mau
+  static async chart(req, res, next) {
+    try {
+      const { id } = req.user;
+      const data = await Transaksi.findAll({
+        where: {
+          UserId: id,
         },
       });
+
+      let arr = [];
+      data.forEach((el) => {
+        arr.push(el.dataValues);
+      });
+      console.log(arr);
+      const result = calculator(arr);
+
+      res.status(200).json(result);
     } catch (err) {
       console.log(err);
       next(err);
     }
   }
+
+  static async postTranskasi(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { liter, userId } = req.body;
+      const { petrolId } = req.params;
+      console.log(id, liter, petrolId, "<<");
+      const gas = await Petrol.findByPk(petrolId);
+      console.log(liter, userId);
+      if (!gas) {
+        throw { name: "Data Not Found" };
+      }
+
+      let input = {
+        UserId: userId,
+        PetrolId: petrolId,
+        TotalHarga: Math.round(liter * gas.harga),
+      };
+
+      const transaksi = await Transaksi.create(input);
+
+      res.status(201).json({
+        statuscode: 201,
+        data: {
+          transaksi,
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
+
 module.exports = Controller;

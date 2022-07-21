@@ -1,6 +1,7 @@
 "use strict";
 
 const errorHandler = (err, req, res, next) => {
+  console.log(err);
   let code = 500;
   let message = "Internal Server Error";
   const { name } = err;
@@ -30,7 +31,7 @@ const errorHandler = (err, req, res, next) => {
   } else if (name === "BadRequest") {
     code = 400;
     message = "Bad Request";
-  } else if (name === "Data Not Found" || name === `Movie not found`) {
+  } else if (name === "Data Not Found" || name === `Gas not found`) {
     code = 404;
     message = "Data Not Found";
   }

@@ -5,13 +5,14 @@ const { User } = require("../models");
 
 const authentication = async (req, res, next) => {
   try {
-    const { accesstoken } = req.headers;
+    const { access_token } = req.headers;
+    console.log(access_token);
 
-    if (!accesstoken) {
+    if (!access_token) {
       throw { name: "Invalid token" };
     }
 
-    const payload = verifyJwt(accesstoken);
+    const payload = verifyJwt(access_token);
     const { id } = payload;
     const user = await User.findByPk(id);
 
