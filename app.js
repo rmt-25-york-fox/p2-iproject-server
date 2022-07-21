@@ -1,18 +1,68 @@
 const express = require('express')
 const {OAuth2Client} = require('google-auth-library');
 const cors = require('cors')
+const nodemailer = require('nodemailer')
+
 
 var jwt = require('jsonwebtoken');
 
 const axios = require('axios')
-const { User } = require('./models')
+const { User, Post } = require('./models')
+const multer = require('multer')
 
 const app = express()
 const port = 3000
 
 app.use(cors())
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+
+const transporter = nodemailer.createTransport({
+  service: "hotmail",
+  auth:{
+    user: "demo.tmagira@outlook.com",
+    pass: "()()1234"
+  }
+})
+
+
+const fileStorage = multer.diskStorage({
+  destination: (req,res, cb) =>{
+    cb(null, 'images')
+  },
+  filename: (req,res, cb) => {
+    cb(null, new Date().getTime()+ '-'+ fileStorage.originalname)
+  }
+})
+
+const fileFilter = (req,file, cb) => {
+  if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' ){
+    cb(null, true)
+  }else{
+    cb(null, false)
+  }
+}
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
+})
+
+app.get('/all', async(req,res)=>{
+  try {
+    const allStatus = await Post.findAll(
+      {order:[
+        ['createdAt', 'DESC']
+      ],
+      include:[User]})
+
+    res.status(200).json({
+      statusCode: 200,
+     data: allStatus
+   })
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 app.post('/login', async (req,res,next) => {
@@ -53,7 +103,7 @@ app.post('/login', async (req,res,next) => {
             statusCode: 200,
            message: 'Google Login Successful',
            access_token: accessToken,
-           username: User.username
+           username: user.username
          })
         }catch(err){
           console.log(err)
@@ -80,6 +130,7 @@ app.use(async (req, res, next) => {
 
     req.user = {
       id: findUser.id,
+      email: findUser.email
     }
     next()
   }catch(err){
@@ -88,12 +139,51 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.post('/newStatus', (req,res,next)=>{
+app.use(multer({storage: fileStorage, fileFilter}).single('imageUrl'))
+
+app.post('/newStatus', async (req,res,next)=>{
   try {
     const UserId = req.user.id
-    const { content, imageUrl } = req.body
+
+    const { content } = req.body
+
+    if(!req.file){
+      imageUrl = ''
+    }else{
+      imageUrl = req.file.path
+    }
+
+    const newPost = await Post.create({
+      content,
+      imageUrl,
+      UserId,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })
+
+    const options ={
+      from: "demo.tmagira@outlook.com",
+      to: req.user.email,
+      subject: "New Post Created",
+      text: "Congrats! You just uploaded a new post!"
+    }
+    
+
+    transporter.sendMail(options, function(err,info){
+      if(err){
+        console.log(err)
+      }else{
+        console.log(info.response)
+      }
+    })
+
+    res.status(201).json({
+      statusCode: 201,
+     message: 'New Post Created'
+   })
+
   } catch (error) {
-    console.log(err)
+    console.log(error)
   }
 })
 
