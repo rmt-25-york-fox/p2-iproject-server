@@ -11,3 +11,5 @@ routes.use(authentication);
 // routes.post("/upload")
 
 routes.use(errorHandler);
+
+module.exports = routes;
