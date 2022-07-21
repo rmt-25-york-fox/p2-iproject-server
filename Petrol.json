@@ -1,0 +1,27 @@
+[
+  {
+    "nama": "Pertamax",
+    "harga": 9000,
+    "informasi": "Merupakan bahan bakar mesin bensin dengan angka oktan minimal 88 Pertamax dapat digunakan pada kendaraan bermotor bensin dengan risiko kompresi rendah "
+  },
+  {
+    "nama": "Keduax",
+    "harga": 13000,
+    "informasi": "Merupakan bahan bakar gasoline yang memiliki angka oktan 90 serta Bahan bakar Keduax memiliki angka oktan yang lebih tinggi daripada bahan bakar Pertamax 88 yang saat ini beredar di Indonesia"
+  },
+  {
+    "nama": "Ketigax",
+    "harga": 16000,
+    "informasi": "Merupakan bahan bakar bensin dengan angka oktan minimal 92 berstandar international. Ketigax mampu membersihkan bagian dalam mesin. Ketigax juga dilengkapi dengan pelindung anti karat pada saluran bahan bakar dan ruang bakar mesin"
+  },
+  {
+    "nama": "Keempatx",
+    "harga": 20000,
+    "informasi": "Merupakan bahan bakar untuk kendaraan bermesin bensin yang dikembangkan bersama yang dirancang untuk memenuhi persyaratan mesin berteknologi tinggi. Keempatx pertama kali diluncurkan di Belgia sebagai bahan bakar resmi pada Lamborghini European."
+  },
+  {
+    "nama": "Kelimax",
+    "harga": 25000,
+    "informasi": "Bahan bakar kendaraan yang diakui federasi balap internasional mesin lebih responsive, lebih stabil, dan memiliki daya tahan yang tinggi, serta bersahabat dengan lingkungan dan memiliki oktan minimal 100"
+  }
+]
