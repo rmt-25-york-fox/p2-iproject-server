@@ -1,6 +1,35 @@
-const {Preach} = require('../models')
+const {Preach, Pastor} = require('../models')
+const { Op} = require('sequelize')
 class Controller{
+    static async preachList(req,res, next){
+        try {
 
+            let options = {
+                include: [
+                    {
+                        model: Pastor
+                    }
+                ],
+                where: {
+                    date:{
+                        [Op.lte]: new Date()
+                    }
+
+                }
+            }
+            const { PastorId } = req.query
+
+            if(PastorId){
+                options.include[0].where = { id: +PastorId}
+              }
+
+            const preaches = await Preach.findAll(options)
+
+            res.status(200).json(preaches)
+        } catch (err) {
+            next(err)
+        }
+    }
     static async addPreach(req,res,next){
         try {
             const { title, date, VideoUrl} = req.body
