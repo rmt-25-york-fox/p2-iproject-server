@@ -1,0 +1,30 @@
+[
+  {
+    "fullName": "Dadang",
+    "nickname": "Bangdang",
+    "phoneNumber": "08123451",
+    "location": "Depan UMN",
+    "role": "Merchant"
+  },
+  {
+    "fullName": "Tono",
+    "nickname": "Wakwaw",
+    "phoneNumber": "08123452",
+    "location": "Samping UMN",
+    "role": "Merchant"
+  },
+  {
+    "fullName": "Budi",
+    "nickname": "Pencot",
+    "phoneNumber": "08123453",
+    "location": "Depan UMN",
+    "role": "Merchant"
+  },
+  {
+    "fullName": "Roy",
+    "nickname": "Bang Roy",
+    "phoneNumber": "0812345",
+    "location": "Belakang UMN",
+    "role": "Merchant"
+  }
+]
