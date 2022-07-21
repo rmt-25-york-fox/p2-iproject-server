@@ -8,6 +8,7 @@ List of Available Endpoints:
 - `GET /donations`
 - `POST /donations/payment`
 - `PATCH /donations/payment`
+- `POST /livechats`
 
 ### GET /tutorials/nodejs
 
@@ -23,6 +24,7 @@ _200 - OK_
   ```json
   [
     {
+      "id": Integer,
       "title": String,
       "thumbnail": String,
       "channelTitle": String,
@@ -49,6 +51,7 @@ _200 - OK_
   ```json
   [
     {
+      "id": Integer,
       "title": String,
       "thumbnail": String,
       "channelTitle": String,
@@ -72,9 +75,11 @@ _200 - OK_
 _200 - OK_
 
 - Body
+
   ```json
   [
     {
+      "id": Integer,
       "title": String,
       "thumbnail": String,
       "channelTitle": String,
@@ -177,6 +182,33 @@ _404 - Not Found_
   ```json
   {
     "message": "Donation not found"
+  }
+  ```
+
+### POST /livechats
+
+#### Description
+
+- Post the livechat endpoint to get a new chat
+
+#### Request
+
+- Body
+  ```json
+  {
+    "username": String,
+    "message": String,
+  }
+  ```
+
+#### Response
+
+_200 - Ok_
+
+- Body
+  ```json
+  {
+    "message": "Message sent successfully"
   }
   ```
 
