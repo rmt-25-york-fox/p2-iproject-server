@@ -7,5 +7,10 @@ const authentication = require('../Middlewares/authenticator')
 router.get('/', PreachCon.preachList)
 router.use(authentication)
 router.post('/add', authorization,PreachCon.addPreach)
+router.get('/mypreaches', authorization,PreachCon.personalPreachList)
+router.get('/mypreaches/:id', authorization,PreachCon.getUpdatePreach)
+
+
+
 
 module.exports = router

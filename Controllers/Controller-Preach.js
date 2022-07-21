@@ -15,7 +15,8 @@ class Controller{
                         [Op.lte]: new Date()
                     }
 
-                }
+                },
+                 order: [['date', 'DESC']]
             }
             const { PastorId } = req.query
 
@@ -40,6 +41,46 @@ class Controller{
                 throw err
             }
             res.status(201).json(newPreach)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async personalPreachList(req , res , next){
+        try {
+            let options = {
+                include: [
+                    {
+                        model: Pastor
+                    }
+                ],
+                where:{
+                    PastorId: req.user.id
+                },
+
+                 order: [['date', 'DESC']]
+            }
+
+
+
+
+
+            const preaches = await Preach.findAll(options)
+
+            res.status(200).json(preaches)
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async getUpdatePreach(req, res , next){
+        try {
+
+            const {id} = req.params
+            console.log(id)
+            const preach = await Preach.findOne({where:{
+                id: +id
+            }})
+            res.status(200).json(preach)
         } catch (err) {
             next(err)
         }
