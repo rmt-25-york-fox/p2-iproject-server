@@ -1,0 +1,38 @@
+[
+  {
+    "UserId": 1,
+    "name": "Enterprise",
+    "information": "Space Shuttle Enterprise was the first orbiter of the Space Shuttle system",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Space_shuttle_enterprise.jpg/1920px-Space_shuttle_enterprise.jpg"
+  },
+  {
+    "UserId": 1,
+    "name": "Challenger",
+    "information": "The Space Shuttle Challenger was the second orbiter of the Space Shuttle system",
+    "imgUrl": "https://www.nasa.gov/sites/default/files/thumbnails/image/61a-s-0139.jpg"
+  },
+  {
+    "UserId": 2,
+    "name": "Columbia",
+    "information": "Space Shuttle Columbia was a Space Shuttle orbiter manufactured by Rockwell International and operated by NASA.",
+    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Columbia_landing_on_Rogers_dry_lake.triddle.jpg/800px-Columbia_landing_on_Rogers_dry_lake.triddle.jpg"
+  },
+  {
+    "UserId": 3,
+    "name": "Discovery",
+    "information": "Space Shuttle Discovery is one of the orbiters from NASA's Space Shuttle program and the third of five fully operational orbiters to be built.",
+    "imgUrl": "https://airandspace.si.edu/webimages/640//4065_640.jpg"
+  },
+  {
+    "UserId": 4,
+    "name": "Atlantis",
+    "information": "Atlantis was the fourth shuttle constructed and the last one to fly into space",
+    "imgUrl": "https://live.staticflickr.com/3087/3732809538_3f672ca97e_b.jpg"
+  },
+  {
+    "UserId": 1,
+    "name": "Endeavour",
+    "information": "Space Shuttle Endeavour is a retired orbiter from NASA's Space Shuttle program and the fifth and final operational Shuttle built",
+    "imgUrl": "https://www.travelgumbo.com/fileSendAction/fcType/0/fcOid/450819477781037547/filePointer/450819477781037579/fodoid/450819477781037560/imageType/LARGE/inlineImage/true/2015-08-10%2520CSC%2520Endeavor%252019.jpg"
+  }
+]
