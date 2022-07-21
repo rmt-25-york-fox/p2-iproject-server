@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    phoneNumber: DataTypes.INTEGER,
+    phoneNumber: DataTypes.STRING,
     address: DataTypes.STRING,
     points: DataTypes.INTEGER,
     role: DataTypes.STRING
