@@ -1,35 +1,32 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Requests', {
+    await queryInterface.createTable('Subscriptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      description: {
-        type: Sequelize.TEXT
-      },
-      points: {
-        type: Sequelize.INTEGER
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      UserId: {
+      MemberId: {
         type: Sequelize.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references:{
-          model:'Users',
-          key:'id'
-        }
+        model:{
+          tableName: 'Members',
+          key: 'id'
+        },
+      }
       },
-      picId: {
-        type: Sequelize.INTEGER
+      PastorId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+        model:{
+          tableName: 'Pastors',
+          key: 'id'
+        },
+      }
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Requests');
+    await queryInterface.dropTable('Subscriptions');
   }
 };
