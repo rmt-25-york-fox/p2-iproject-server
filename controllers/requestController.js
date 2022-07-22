@@ -7,30 +7,26 @@ class Requests {
         try { 
             const UserId = req.user.id
             const status = 'New'
+            let logasi = ''
+            let timezone = ''
             const { title,description,points } = req.body
             const checkPoint = await User.findOne({where:{id:UserId}})
             if(checkPoint.points < points) throw {name:'Insufficient points'}
             const decrease = await User.decrement({points:points},{where:{id:UserId}})
-            const GetLocation = require('location-by-ip');
-            const SPOTT_API_KEY = '4add49e12cmsh77b2507efa94f0ep1655eajsnce8669274ed4';
-            let logasi = ''
-            let timezone = ''
-            const getLocation = new GetLocation(SPOTT_API_KEY)
-            getLocation.byMyIp()
-            .then(data=>{
-                console.log(data);
-                logasi = data.name
-                timezone = data.timezoneId
-                const resp = Request.create({title,description,points,status,UserId,location:logasi,timezone})
-                res.status(201).json(
-                    resp
-                )
+            const response = await axios({
+                method: "GET",
+                url: `https://spott.p.rapidapi.com/places/ip/me`,
+                headers: {
+                    'X-RapidAPI-Key': '8255cb8690msh49bb7bd03bb98e8p11b0b5jsnfc4e654d1ba6',
+                    'X-RapidAPI-Host': 'spott.p.rapidapi.com'
+                }
             })
-            .catch(err=>{
-                next(err)
-            })
-            
-            
+            logasi = response.data.name
+            timezone = response.data.timezoneId
+            const resp = Request.create({title,description,points,status,UserId,location:logasi,timezone})
+            res.status(201).json(
+                resp
+            )
         } catch (err) {
             console.log(err);
             next(err)
@@ -136,16 +132,17 @@ class Requests {
             const isi = ini.description
             const response = await axios({
                 method: "POST",
-                url: `https://simple-tts-text-to-speech.p.rapidapi.com/tts`,
+                url: `https://voice-text-to-speech.p.rapidapi.com/read`,
                 headers: {
                     'content-type': 'application/json',
                     'X-RapidAPI-Key': '8255cb8690msh49bb7bd03bb98e8p11b0b5jsnfc4e654d1ba6',
-                    'X-RapidAPI-Host': 'simple-tts-text-to-speech.p.rapidapi.com'
+                    'X-RapidAPI-Host': 'voice-text-to-speech.p.rapidapi.com'
                 },
-                data:`{"text":"${isi}","voice":"jv_ID/google-gmu_low"}`
+                data:`{"text":"${isi}","voice":"std-en-US-01","format":"mp3"}`
             })
-            console.log(response);
-            res.status(200).json({ response:response.data });
+            const input = response.data.audio
+            const test = atob(input)
+            res.status(200).json({test,data:response.data});
         } catch (err) {
             console.log(err);
             next(err)
