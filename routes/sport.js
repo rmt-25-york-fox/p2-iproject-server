@@ -8,8 +8,6 @@ router.get("/", sportController.getSports);
 
 router.post("/", sportController.createSport);
 
-router.get("/:id", sportController.getSport);
-
 router.put("/:id", authorization, sportController.editSport);
 
 router.patch("/:id", authorizationAdmin, sportController.editSportStatus);

@@ -15,11 +15,6 @@ router.post("/google-sign-in", userController.customerGoogleSignIn);
 router.use(authentication);
 
 router.get(
-  "/sports",
-
-  SportController.customerGetSports
-);
-router.get(
   "/fitness",
 
   SportController.customerGetFitness

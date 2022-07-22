@@ -13,6 +13,7 @@ router.post("/login", userController.login);
 router.post("/google-sign-in", userController.googleSignIn);
 
 router.use(authentication);
+router.patch("/changeSubscribe", userController.changeIsSubscribe);
 router.use("/sports", sportRoutes);
 router.use("/histories", historyRoutes);
 
