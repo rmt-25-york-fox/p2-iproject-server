@@ -25,7 +25,9 @@ class ProfileController {
           file: image, //required
           fileName: req.file.originalname, //required
         })
-        .then((response) => {})
+        .then((response) => {
+          console.log(response);
+        })
         .catch((error) => {
           console.log(error);
         });
