@@ -2,8 +2,10 @@ const { Movie, User, Genre, History } = require("../models");
 class historyController {
   static async getHistories(req, res, next) {
     try {
+      const { id } = req.user;
       let histories = await History.findAll({
         include: [User],
+        where: { UserId: id },
       });
 
       if (!histories) {
