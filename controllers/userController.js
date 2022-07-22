@@ -59,7 +59,7 @@ class userController {
         activitylevel,
         goal,
       } = req.body;
-      console.log(email);
+      console.log("req body>>>", req.body);
       if (email === undefined || email === null) {
         throw { name: "EmailRequired" };
       }
@@ -81,7 +81,7 @@ class userController {
         activitylevel,
         goal,
       });
-      console.log(user);
+      // console.log(user);
       res.status(201).json({ id: user.id, email: user.email });
     } catch (err) {
       console.log(err);
