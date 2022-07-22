@@ -10,15 +10,11 @@ const router = require("express").Router();
 
 router.post("/register", userController.customerRegister);
 router.post("/login", userController.customerLogin);
+
 router.post("/google-sign-in", userController.customerGoogleSignIn);
 
 router.use(authentication);
 
-router.get(
-  "/sports",
-
-  SportController.customerGetSports
-);
 router.get(
   "/fitness",
 
