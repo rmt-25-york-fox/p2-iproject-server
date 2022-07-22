@@ -1,11 +1,3 @@
 # p2-iproject-server
 Individual Project - Server
 
-
-SECRET_KEY="akuSayangDia"
-CLIENT_ID=153541140396-j4noc7hklt2djivr2g12h7r5mrloq7t3.apps.googleusercontent.com
-CLIENT_SECRET=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
-SPBU_API="pk.eyJ1Ijoicml2YWxkaTEyIiwiYSI6ImNsNXVyMjFmdzAyaGcza280ZDI5NG93dWMifQ.2tEf6AubVgf07ErCx_3WkQ"
-
-
-npx heroku config:set SECRET_KEY=akuSayangDia CLIENT_ID=153541140396-j4noc7hklt2djivr2g12h7r5mrloq7t3.apps.googleusercontent.com CLIENT_SECRET=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 SPBU_API=pk.eyJ1Ijoicml2YWxkaTEyIiwiYSI6ImNsNXVyMjFmdzAyaGcza280ZDI5NG93dWMifQ.2tEf6AubVgf07ErCx_3WkQ --app iprojectrivaldi

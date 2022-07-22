@@ -176,9 +176,7 @@ class Controller {
       const { id } = req.user;
       const { liter, userId } = req.body;
       const { petrolId } = req.params;
-      console.log(id, liter, petrolId, "<<");
       const gas = await Petrol.findByPk(petrolId);
-      console.log(liter, userId);
       if (!gas) {
         throw { name: "Data Not Found" };
       }
@@ -209,7 +207,6 @@ class Controller {
         access_token: SPBU_API,
         ...url.parse(req.url, true).query,
       });
-      console.log(params);
       const { query } = req.params;
       const result = await axios(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?${params}`
