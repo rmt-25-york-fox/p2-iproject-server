@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Nike Air Zoom Pegasus 39 By You",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentiumoptio.",
+    "price": "US$ 143,63",
+    "imgUrl": "https://i.imgur.com/FY2NKNE.jpg",
+    "CategoryId": 1
+  },
+  {
+    "name": "ADIDAS ADIZERO BOSTON 10 Men's Running Shoes - Indigo",
+    "description": "For race day and every day. These adidas running shoes are built to withstand a full training cycle, from the first warm-up to the last kick across the finish.",
+    "price": "US$ 153,55",
+    "imgUrl": "https://i.imgur.com/ioL0h1s.jpg",
+    "CategoryId": 1
+  },
+  {
+    "name": "Nike Mercurial Vapor 14 Academy IC Indoor/Court Unisex Soccer Shoe - Blue",
+    "description": "The Nike Mercurial Vapor 14 Academy IC is a grippy design with multi-directional traction that helps prepare you for supercharged speeds.",
+    "price": "US $80,05",
+    "imgUrl": "The Nike Mercurial Vapor 14 Academy IC is a grippy design with multi-directional traction that helps prepare you for supercharged speeds.",
+    "CategoryId": 2
+  }
+]
