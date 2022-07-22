@@ -17,8 +17,8 @@ module.exports = {
           key: "id",
         },
       },
-      imageUrl: {
-        type: Sequelize.STRING,
+      image: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
