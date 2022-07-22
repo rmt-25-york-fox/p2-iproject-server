@@ -80,6 +80,9 @@ module.exports = (sequelize, DataTypes) => {
       goal: {
         type: DataTypes.STRING,
       },
+      isSubscribe: {
+        type: DataTypes.STRING,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

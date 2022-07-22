@@ -3,7 +3,7 @@ const { User } = require("../models");
 
 const authentication = async (req, res, next) => {
   try {
-    const { access_token } = req.headers;
+    const access_token = req.headers.access_token;
     console.log("access_token >>>", access_token);
     const decoded = verifyToken(access_token);
 
@@ -22,7 +22,6 @@ const authentication = async (req, res, next) => {
       req.user = {
         id: user.id,
         email: user.email,
-
         name: user.name,
       };
 

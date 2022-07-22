@@ -141,23 +141,41 @@ class SportController {
     }
   }
 
-  static async getSports(req, res, next) {
-    try {
-      let Sports = await Sport.findAll({ include: [User, Genre] });
+  // static async getSports(req, res, next) {
+  //   try {
+  //     let data = [];
 
-      if (!Sports) {
-        next({ name: "NotFound" });
-      } else {
-        res.status(200).json({
-          statusCode: 200,
-          data: Sports,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  }
+  //     const axios = require("axios");
+
+  //     const options = {
+  //       method: "GET",
+  //       url: "https://exercisedb.p.rapidapi.com/exercises",
+  //       headers: {
+  //         "X-RapidAPI-Key":
+  //           "e271177b1dmsh75da436e4a78356p10452ejsnd733e94bc616",
+  //         "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+  //       },
+  //     };
+
+  //     const resultAxios = await axios
+  //       .request(options)
+  //       .then(function (response) {
+  //         // console.log(response.data);
+  //         data = response.data;
+  //       })
+  //       .catch(function (error) {
+  //         console.error(error);
+  //       });
+
+  //     res.status(200).json({
+  //       statusCode: 200,
+  //       data: data
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     next(err);
+  //   }
+  // }
 
   static async customerGetTodo(req, res, next) {
     try {
@@ -281,32 +299,36 @@ class SportController {
     }
   }
 
-  static async customerGetSports(req, res, next) {
+  static async getSports(req, res, next) {
     try {
-      // pagination
+      let sports = [];
 
-      const { page, size, title, genreId, rating } = req.query;
-      let where = {};
+      const options = {
+        method: "GET",
+        url: "https://exercisedb.p.rapidapi.com/exercises",
+        headers: {
+          "X-RapidAPI-Key":
+            "e271177b1dmsh75da436e4a78356p10452ejsnd733e94bc616",
+          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+        },
+      };
 
-      if (title) {
-        where.title = { [Op.iLike]: `%${title}%` };
-      }
-      if (genreId) {
-        where.genreId = genreId;
-      }
-      if (rating) {
-        where.rating = { [Op.gt]: rating };
-      }
+      let temp = [];
+      await axios
+        .request(options)
+        .then(function (response) {
+          sports = response.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+
+      //Pagination
+
+      const { page, size } = req.query;
 
       if (page && size) {
         const { limit, offset } = getPagination(page, size);
-
-        let sports = await Sport.findAndCountAll({
-          where: where,
-          limit,
-          offset,
-          order: [["id", "ASC"]],
-        });
 
         if (!sports) {
           next({ name: "NotFound" });
@@ -319,40 +341,9 @@ class SportController {
           });
         }
       } else {
-        let sports = await Sport.findAndCountAll({
-          where: where,
-          order: [["id", "ASC"]],
-        });
-
-        if (!sports) {
-          next({ name: "NotFound" });
-        } else {
-          res.status(200).json({
-            statusCode: 200,
-            data: sports,
-          });
-        }
-      }
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  }
-
-  static async getSport(req, res, next) {
-    try {
-      console.log(req.params);
-      const { id } = req.params;
-      let Sport = await Sport.findByPk(id);
-
-      console.log(Sport);
-
-      if (Sport === null) {
-        next({ name: "NotFound" });
-      } else {
         res.status(200).json({
           statusCode: 200,
-          data: Sport,
+          data: sports,
         });
       }
     } catch (err) {
@@ -360,7 +351,7 @@ class SportController {
       next(err);
     }
   }
-  //sport by category body part
+
   static async customerGetSport(req, res, next) {
     try {
       console.log("MASUP");
