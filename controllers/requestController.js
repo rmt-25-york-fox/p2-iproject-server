@@ -135,14 +135,12 @@ class Requests {
                 url: `https://voice-text-to-speech.p.rapidapi.com/read`,
                 headers: {
                     'content-type': 'application/json',
-                    'X-RapidAPI-Key': '8255cb8690msh49bb7bd03bb98e8p11b0b5jsnfc4e654d1ba6',
+                    'X-RapidAPI-Key': 'a26ed560a4mshf535c4a4dc58017p15469djsnb846067114fa',
                     'X-RapidAPI-Host': 'voice-text-to-speech.p.rapidapi.com'
                 },
                 data:`{"text":"${isi}","voice":"std-en-US-01","format":"mp3"}`
             })
-            const input = response.data.audio
-            const test = atob(input)
-            res.status(200).json({test,data:response.data});
+            res.status(200).json( response.data.data.audio );
         } catch (err) {
             console.log(err);
             next(err)
