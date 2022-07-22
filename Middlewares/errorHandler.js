@@ -26,6 +26,9 @@ const errorHandler = async(err,req,res,next)=>{
     }else if (err.message == "Unauthorized Access"){
         code = 403
         message = "Unauthorized Access"
+    }else if(err.message == "You already subscribed this Pastor"){
+        message = "You already subscribed this Pastor"
+        code = 403
     }
     console.log(err)
     res.status(code).json({message})
