@@ -135,7 +135,7 @@ class Requests {
                 url: `https://voice-text-to-speech.p.rapidapi.com/read`,
                 headers: {
                     'content-type': 'application/json',
-                    'X-RapidAPI-Key': 'a26ed560a4mshf535c4a4dc58017p15469djsnb846067114fa',
+                    'X-RapidAPI-Key': '15e7f036dfmshb2f4ad7caf70f82p1243aejsn5ad613488a21',
                     'X-RapidAPI-Host': 'voice-text-to-speech.p.rapidapi.com'
                 },
                 data:`{"text":"${isi}","voice":"std-en-US-01","format":"mp3"}`
