@@ -1,0 +1,18 @@
+[
+  {
+    "UserId": 1,
+    "MerchantId": 2
+  },
+  {
+    "UserId": 2,
+    "MerchantId": 1
+  },
+  {
+    "UserId": 3,
+    "MerchantId": 2
+  },
+  {
+    "UserId": 4,
+    "MerchantId": 3
+  }
+]
