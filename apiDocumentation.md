@@ -4,23 +4,8 @@ List of Available Endpoints:
 
 - `POST /pub/register`
 - `POST /pub/login`
-- `POST /pub/google-sign-in`
-
-- `GET /pub/movies`
-- `GET /pub/movies/:id`
-- `POST /pub/favorites/:movieId`
-- `GET /pub/favorites`
-
-- `POST /register`
-- `POST /login`
-- `POST /google-sign-in`
-
-- `GET /movies`
-- `POST /movies`
-- `GET /movies/:id`
-- `PUT /movies/:id`
-- `PATCH /movies/:id`
-- `DELETE /movies/:id`
+- `PATCH /changeSubscribe`
+- `PUT /movies`
 - `GET /histories`
 
 ### POST /pub/register
