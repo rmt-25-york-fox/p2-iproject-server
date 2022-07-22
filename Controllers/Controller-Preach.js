@@ -1,6 +1,7 @@
 const {Preach, Pastor} = require('../models')
 const { Op} = require('sequelize')
-class Controller{
+
+class Controller {
     static async preachList(req,res, next){
         try {
 
@@ -93,7 +94,7 @@ class Controller{
             const {title, VideoUrl, date} = req.body
            let convertedDate = Date.parse(date)
 
-            console.log(id, "<><><><><><>", {title, VideoUrl, date})
+
             const preach = await Preach.update({title, VideoUrl, date: convertedDate},{where:{
                 id: +id
             }})
@@ -106,6 +107,7 @@ class Controller{
     static async preachById(req , res, next){
         try {
             const {id} = req.params
+
             const preach = await Preach.findOne({
                 include: {
                     model: Pastor
@@ -118,8 +120,10 @@ class Controller{
 
             res.status(200).json(preach)
         } catch (err) {
-            
+            next(err)
         }
     }
 }
+
+
 module.exports = Controller
