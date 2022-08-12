@@ -179,8 +179,6 @@ app.get('/status/:id', async(req,res)=>{
 app.post('/login', async (req,res,next) => {
     
         try{
-    
-          console.log(req.headers.google_token, 'gtoken<<<<<<<<<')
           
           const googleToken = req.headers.google_token
     
@@ -191,7 +189,7 @@ app.post('/login', async (req,res,next) => {
           });
           const payload = ticket.getPayload();
 
-          console.log(payload)
+          console.log(payload.picture, "payload<<<<<")
           
           // find or create
           const [user, create] = await User.findOrCreate({
@@ -199,7 +197,7 @@ app.post('/login', async (req,res,next) => {
             defaults:{
               username: payload.name,
               email: payload.email,
-              displayPic: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+              displayPic: payload.picture,
             },
             hooks: false
           })
@@ -214,7 +212,8 @@ app.post('/login', async (req,res,next) => {
             statusCode: 200,
            message: 'Google Login Successful',
            access_token: accessToken,
-           username: user.username
+           username: user.username,
+           displayPic: user.displayPic
          })
         }catch(err){
           res.status(500).json({
